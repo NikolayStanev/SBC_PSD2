@@ -45,52 +45,12 @@
               pathname="conf/tomcat-users.xml" />
 			  
 			  
-			  <Resource name="jdbc/cowboys2" auth="Container" type="javax.sql.DataSource"
-              factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" defaultAutoCommit="false" defaultTransactionIsolation="READ_COMMITTED"  maxAge="600000" maxActive="10" maxIdle="10" maxWait="10000"
-              username="root" password="sla6945" driverClassName="com.mysql.jdbc.Driver"
-              url="jdbc:mysql://localhost:3306/cowboys2_test"/>
-			   
-			   <Resource name="jdbc/uefa2016" auth="Container" type="javax.sql.DataSource"
-              factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" defaultAutoCommit="false" defaultTransactionIsolation="READ_COMMITTED"  maxAge="600000" maxActive="10" maxIdle="10" maxWait="10000"
-              username="root" password="sla6945" driverClassName="com.mysql.jdbc.Driver"
-              url="jdbc:mysql://localhost:3306/uefa2016"/>
-			  
-			  <Resource name="jdbc/geoservice" auth="Container" type="javax.sql.DataSource"
-              factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" defaultAutoCommit="false" defaultTransactionIsolation="READ_COMMITTED"  maxAge="600000" maxActive="10" maxIdle="10" maxWait="10000"
-              username="root" password="sla6945" driverClassName="com.mysql.jdbc.Driver"  testOnBorrow="true" validationQuery="select 1"
-              url="jdbc:mysql://localhost:3306/geoservice"/>
-			  
-			  
-			  <Resource name="jdbc/scoringengine" auth="Container" type="javax.sql.DataSource"
-              factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" defaultAutoCommit="false" defaultTransactionIsolation="READ_COMMITTED"  maxAge="600000" maxActive="10" maxIdle="10" maxWait="10000"
-              username="root" password="sla6945" driverClassName="com.mysql.jdbc.Driver" testOnBorrow="true" validationQuery="select 1"
-              url="jdbc:mysql://localhost:3306/scoringengine"/>
-			  
-			  <Resource name="jdbc/fifa2018" auth="Container" type="javax.sql.DataSource"
-              factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" defaultAutoCommit="false" defaultTransactionIsolation="READ_COMMITTED"  maxAge="600000" maxActive="10" maxIdle="10" maxWait="10000"
-              username="root" password="sla6945" driverClassName="com.mysql.jdbc.Driver" testOnBorrow="true" validationQuery="select 1"
-              url="jdbc:mysql://localhost:3306/fifa2018"/>
-			  
-			  <!--Resource name="jdbc/restrictedperson" auth="Container" type="javax.sql.DataSource"
-              factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" defaultAutoCommit="false" defaultTransactionIsolation="READ_COMMITTED"  maxAge="600000" maxActive="10" maxIdle="10" maxWait="10000"
-              username="root" password="sla6945" driverClassName="com.mysql.jdbc.Driver" testOnBorrow="true" validationQuery="select 1"
-              url="jdbc:mysql://localhost:3306/restrictedperson"/ -->
-			  
-			  <Resource name="jdbc/restrictedperson" auth="Container" type="javax.sql.DataSource"
-              factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" defaultAutoCommit="false" defaultTransactionIsolation="READ_COMMITTED"  maxAge="600000" maxActive="10" maxIdle="10" maxWait="10000"
-              username="UBXAML" password="UBXAML" driverClassName="oracle.jdbc.driver.OracleDriver" testOnBorrow="true" validationQuery="select 1 from dual"
-              url="jdbc:oracle:thin:@172.16.52.41:1521:flexlive"/>
-			  
-			  
 			  <Resource name="jdbc/psd2" auth="Container" type="javax.sql.DataSource"
               factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" defaultAutoCommit="false" defaultTransactionIsolation="READ_COMMITTED"  maxAge="600000" maxActive="10" maxIdle="10" maxWait="10000"
               username="UBXPSD2" password="ubxpsd2" driverClassName="oracle.jdbc.driver.OracleDriver" testOnBorrow="true" validationQuery="select 1 from dual"
               url="jdbc:oracle:thin:@172.16.52.16:1521:SCARDS"/>
 			  
-			  <Resource name="jdbc/covid" auth="Container" type="javax.sql.DataSource"
-              factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" defaultAutoCommit="false" defaultTransactionIsolation="READ_COMMITTED"  maxAge="600000" maxActive="10" maxIdle="10" maxWait="10000"
-              username="root" password="sla6945" driverClassName="com.mysql.jdbc.Driver"
-              url="jdbc:mysql://localhost:3306/covid"/>
+			  
 			  
   </GlobalNamingResources>
 
@@ -218,60 +178,7 @@
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
                prefix="localhost_access_log" suffix=".txt"
                pattern="%h %l %u %t &quot;%r&quot; %s %b" />
-			   
-		
-		
-		<Context path="/cowboys2" docBase="cowboys2"> <!--  sessionCookieName="JSESSIONID_OATH2" /> -->
-		   
-			<Resource name="conf/logConfig" type="com.efarmbg.backend.managers.LogConfiguration" factory="org.apache.naming.factory.BeanFactory" 
-				LOG_DEST= "FILE" LOG_MODE = "TRACE" LOG_MAX_NUM = "20" LOG_FILE_PER_THREAD = "false" LOG_MAX_LENGTH = "10" LOG_DIR="./webapps/cowboys2/logs" />
-			
-        </Context>
-		
-		<Context path="/efarmmobile" docBase="efarmmobile"> <!--  sessionCookieName="JSESSIONID_OATH2" /> -->
-		    <Valve className="waffle.apache.NegotiateAuthenticator" principalFormat="fqn" roleFormat="both" protocols="Negotiate,NTLM" />
-            
-			<Realm className="waffle.apache.WindowsRealm" />
-			
-			<Resource name="conf/logConfig" type="com.efarmbg.mobile.server.managers.LogConfiguration" factory="org.apache.naming.factory.BeanFactory" 
-				LOG_DEST= "FILE" LOG_MODE = "TRACE" LOG_MAX_NUM = "20" LOG_FILE_PER_THREAD = "false" LOG_MAX_LENGTH = "10" LOG_DIR="./webapps/efarmmobile/logs" />
-			
-        </Context>
-		
-		<Context path="/uefa2016" docBase="uefa2016">
-			<Resource name="conf/logConfigUEFA" type="com.simplia.uefa2016.server.managers.LogConfiguration" factory="org.apache.naming.factory.BeanFactory" 
-				LOG_DEST= "FILE" LOG_MODE = "TRACE" LOG_MAX_NUM = "20" LOG_FILE_PER_THREAD = "false" LOG_MAX_LENGTH = "10" LOG_DIR="./webapps/uefa2016/logs" />
-        </Context>
-		
-		<Context path="/fifa2018" docBase="fifa2018">
-			<Resource name="conf/logConfigFIFA2018" type="com.simplia.fifa2018.server.managers.LogConfiguration" factory="org.apache.naming.factory.BeanFactory" 
-				LOG_DEST= "FILE" LOG_MODE = "TRACE" LOG_MAX_NUM = "20" LOG_FILE_PER_THREAD = "false" LOG_MAX_LENGTH = "10" LOG_DIR="./webapps/fifa2018/logs" />
-        </Context>
-		
-		<Context path="/geoservice" docBase="geoservice">
-			<Resource name="conf/configGeoservice" type="com.sirmabc.geoservice.configuration.ConfigManager" factory="org.apache.naming.factory.BeanFactory" 
-				googleAPIKey= "AIzaSyB0xw7n_NEBV3c__iAZJCiQcNx_kYmhtfk" />
-		</Context>
-		
-		
-		<Context path="/scoringEngine" docBase="scoringEngine">
-			<Resource name="conf/settings" type="com.sbc.scoring.util.Settings" factory="org.apache.naming.factory.BeanFactory" 
-				storageType="MYSQL" geoServiceURL="http://172.16.51.127:8080/geoservice/rest/geolocator"/>
-				
-			<Resource name="conf/logConfig" type="com.sbc.logging.LogConfiguration" factory="org.apache.naming.factory.BeanFactory"
-                      logFilePerThread="false" logAppendToLast="false" logDir="./webapps/scoringEngine/logs" logMode="DEBUG" logDest="FILE" maxFileLength="10" maxFileNum="10"/>
-		</Context>
-		
-		<Context path="/rp" docBase="rp">
-			
-			<Resource name="conf/logConfig" type="com.sirmabc.common.logging.LogConfiguration" factory="org.apache.naming.factory.BeanFactory"
-                      logFilePerThread="false" logAppendToLast="false" logDir="./webapps/rp/logs" logMode="DEBUG" logDest="FILE" maxFileLength="10" maxFileNum="10"/>
-			
-			<Resource name="conf/daoConfig" type="com.sirmabc.rppeps.dao.DAOConfig" factory="org.apache.naming.factory.BeanFactory"
-                      rdbms="ORACLE" />
-		</Context>
-		
-		
+			  
 		<Context path="/psd2" docBase="psd2">
 			
 			<Resource name="conf/logConfig" type="com.sbc.common.logging.LogConfiguration" factory="org.apache.naming.factory.BeanFactory"
@@ -288,14 +195,6 @@
 			
 			
 		</Context>
-
-
-        <Context path="/covid" docBase="covid"> <!--  sessionCookieName="JSESSIONID_OATH2" /> -->
-		    <Resource name="conf/logConfig" type="com.simplia.common.logging.LogConfiguration" 
-			factory="org.apache.naming.factory.BeanFactory" 
-				LOG_DEST= "FILE" LOG_MODE = "TRACE" LOG_MAX_NUM = "20" LOG_FILE_PER_THREAD = "false" LOG_MAX_LENGTH = "10" LOG_DIR="./webapps/covid/logs" />
-			
-        </Context>
       </Host>
     </Engine>
   </Service>
