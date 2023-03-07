@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="psd2">
+    <output-path>$PROJECT_DIR$/out/artifact</output-path>
+    <root id="archive" name="SBS_PSD2.jar">
+      <element id="module-output" name="SBS_PSD2" />
+    </root>
+  </artifact>
+</component>
