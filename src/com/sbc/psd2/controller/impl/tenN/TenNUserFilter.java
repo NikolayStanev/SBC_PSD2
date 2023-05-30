@@ -48,8 +48,6 @@ public class TenNUserFilter extends UserFilter {
             userInfo.setCallerIP(ip);
             threadLocalUser.set(userInfo);
 
-            checkUserIDToken();
-
         } catch (Exception e) {
             errorHandling(response, e);
             return SKIP;

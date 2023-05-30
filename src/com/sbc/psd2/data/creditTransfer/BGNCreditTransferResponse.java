@@ -1,4 +1,5 @@
 package com.sbc.psd2.data.creditTransfer;
+import com.sbc.psd2.data.rest.Amount;
 import com.sbc.psd2.data.rest.Authentication;
 
 
@@ -14,6 +15,8 @@ public class BGNCreditTransferResponse {
    private String paymentId;
    private Authentication chosenScaMethod = Authentication.AUTHENTICATION_SBC;
    private GetCreditTransferLinks _links;
+  private Amount transactionFees;
+  private boolean transactionFeeIndicator;
 
   public BGNCreditTransferResponse() {
   }
@@ -26,6 +29,13 @@ public class BGNCreditTransferResponse {
     this.transactionStatus = transactionStatus;
     this.paymentId = paymentId;
     this._links = _links;
+  }
+  public BGNCreditTransferResponse(String transactionStatus, String paymentId, GetCreditTransferLinks _links, Amount transactionFees, boolean transactionFeeIndicator) {
+    this.transactionStatus = transactionStatus;
+    this.paymentId = paymentId;
+    this._links = _links;
+    this.transactionFees = transactionFees;
+    this.transactionFeeIndicator = transactionFeeIndicator;
   }
 
   public static BGNCreditTransferResponse buildResponse(BGNCreditTransferOp op) {
@@ -72,7 +82,10 @@ public class BGNCreditTransferResponse {
     return "BGNCreditTransferResponse{" +
             "transactionStatus='" + transactionStatus + '\'' +
             ", paymentId='" + paymentId + '\'' +
+            ", chosenScaMethod=" + chosenScaMethod +
             ", _links=" + _links +
+            ", transactionFees=" + transactionFees +
+            ", transactionFeeIndicator=" + transactionFeeIndicator +
             '}';
   }
 }

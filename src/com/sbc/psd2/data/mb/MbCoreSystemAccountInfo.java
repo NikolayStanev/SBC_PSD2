@@ -82,4 +82,9 @@ public class MbCoreSystemAccountInfo implements CoreSystemAccountInfo {
     public void setBranch(String branch) {
         this.branch=branch;
     }
+
+    @Override
+    public String getPhoneNumber() {
+        return null;
+    }
 }

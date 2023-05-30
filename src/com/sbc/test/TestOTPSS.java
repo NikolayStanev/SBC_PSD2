@@ -24,7 +24,7 @@ public class TestOTPSS {
   private static final String USER_ID = "sbc";
   private static final String PWD = "pass1234";
 
-  private static final String OTPSS_URL = "https://172.16.51.97/OTPSS/Sign"; //"http://172.16.51.152:8080/OTPSS/Sign";//https://172.16.51.97/OTPSS/";
+  private static final String OTPSS_URL = "https://172.16.51.97/OTPSS_10n/";//"https://172.16.51.97/OTPSS/Sign"; //"http://172.16.51.152:8080/OTPSS/Sign";//https://172.16.51.97/OTPSS/";
 
 
   private static final String XML_SIGN = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +

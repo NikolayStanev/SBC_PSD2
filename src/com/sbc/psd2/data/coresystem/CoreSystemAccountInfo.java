@@ -33,4 +33,6 @@ public interface CoreSystemAccountInfo {
   public String getBranch();
 
   public void setBranch(String branch);
+
+  public String getPhoneNumber();
 }

@@ -84,14 +84,20 @@ public class TenNCoreSystemCommunicator implements CoreSystemCommunicator {
             //Get accDetails to obtain customer ref.
             TenNCoreAccount tenNCoreAccount = getAccountDetails(op.getDebtorAccount().getIban().getIban());
 
+            op.setDebtorPhoneNumber(tenNCoreAccount.getPhoneNumber());
+
             //Call for taxes
             URL getTaxesURL = new URL(AbstractCommunicatorFactory.getInstance().getCoreSystemCommunicatorEndPoint() + makeTransactionUrl.replace("{id}", tenNCoreAccount.getCustomerNumber()));
-            GetTaxesPojo getTaxesPojo = new GetTaxesPojo(tenNCoreAccount.getCustomerAccountNumber(),op.getInstructedAmount().getContent(), op.getPaymentType().getServiceLevel());
+            GetTaxesPojo getTaxesPojo = new GetTaxesPojo(tenNCoreAccount.getCustomerAccountNumber(),op.getInstructedAmount().getContent());
 
             HttpClient http = new HttpClient(getTaxesURL,"application/json", headers);
             http.setRequestBody(getTaxesPojo);
 
             TenNTaxes taxes = http.doGet(TenNTaxes.class);
+
+            //add taxes to bgn transfer
+            op.setTransactionFeeCurrency(taxes.getTransactionFeeCurrency());
+            op.setTransactionFee(Integer.toString(taxes.getTransactionFee()));
 
             //TODO: send taxes to SCA!
             SCACommunicator communicator = AbstractCommunicatorFactory.getInstance().getScaCommunicator();
@@ -117,6 +123,8 @@ public class TenNCoreSystemCommunicator implements CoreSystemCommunicator {
             String transactionRef = httpClient.doPost(String.class);
 
             op.setCustomerNumber(tenNCoreAccount.getCustomerNumber());
+
+            //TODO: update DB to insert phone number in bgntransfer table
             BGNCreditTransferOpDAO.update(op);
 
             return transactionRef;
@@ -225,7 +233,7 @@ public class TenNCoreSystemCommunicator implements CoreSystemCommunicator {
 
         try{
 
-            URL getAllAccountsURL = new URL(AbstractCommunicatorFactory.getInstance().getCoreSystemCommunicatorEndPoint() + readTransactionsDetailsUrl);
+            URL readTransactionsDetailsURL = new URL(AbstractCommunicatorFactory.getInstance().getCoreSystemCommunicatorEndPoint() + readTransactionsDetailsUrl);
 
             HashMap<String, String> headers = new HashMap<>();
             headers.put("Authorization", TenNIdentityManagementCommunicator.tokenType + " " + TenNIdentityManagementCommunicator.apiToken);
@@ -234,7 +242,7 @@ public class TenNCoreSystemCommunicator implements CoreSystemCommunicator {
 
             GetTransactionDetailsPoJo requestBody = new GetTransactionDetailsPoJo(transactionId, customerRef);
 
-            HttpClient httpClient = new HttpClient(getAllAccountsURL, "application/json", headers);
+            HttpClient httpClient = new HttpClient(readTransactionsDetailsURL, "application/json", headers);
             httpClient.setRequestBody(requestBody);
 
             TenNCoreTransactionDetails transactionDetails = httpClient.doGet(TenNCoreTransactionDetails.class);
@@ -260,6 +268,32 @@ public class TenNCoreSystemCommunicator implements CoreSystemCommunicator {
             throw new ApplicationException(ApplicationException.INTERNAL_ERROR, "Internal error!");
         }
     }
+
+//    @Override
+//    public Amount getTaxes(BGNCreditTransferOp op) {
+//
+//        try{
+//            HashMap<String, String> headers = new HashMap<>();
+//            headers.put("Authorization", TenNIdentityManagementCommunicator.tokenType + " " + TenNIdentityManagementCommunicator.apiToken);
+//            //Get accDetails to obtain customer ref.
+//            TenNCoreAccount tenNCoreAccount = getAccountDetails(op.getDebtorAccount().getIban().getIban());
+//
+//            //Call for taxes
+//            URL getTaxesURL = new URL(AbstractCommunicatorFactory.getInstance().getCoreSystemCommunicatorEndPoint() + makeTransactionUrl.replace("{id}", tenNCoreAccount.getCustomerNumber()));
+//            GetTaxesPojo getTaxesPojo = new GetTaxesPojo(tenNCoreAccount.getCustomerAccountNumber(),op.getInstructedAmount().getContent());
+//
+//            HttpClient http = new HttpClient(getTaxesURL,"application/json", headers);
+//            http.setRequestBody(getTaxesPojo);
+//
+//            TenNTaxes taxes = http.doGet(TenNTaxes.class);
+//
+//            return new Amount(taxes.getTransactionFeeCurrency(), new BigDecimal(taxes.getTransactionFee()));
+//
+//        }catch (Exception e) {
+//            LogManager.log(getClass(), e);
+//            throw new ApplicationException(ApplicationException.INTERNAL_ERROR, "Internal error!");
+//        }
+//    }
 
     @Override
     public ReadTransactionsListResponse readTransactionsList(String accountId, Date dateFrom, Date dateTo, String bookingStatus) throws ApplicationException {

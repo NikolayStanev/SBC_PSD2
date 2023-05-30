@@ -8,10 +8,9 @@ public class GetTaxesPojo {
     public BigDecimal amount;
     public String productCode;
 
-    public GetTaxesPojo(String accountNo, BigDecimal amount, String productCode) {
+    public GetTaxesPojo(String accountNo, BigDecimal amount) {
         this.accountNo = accountNo;
         this.amount = amount;
-        this.productCode = productCode;
     }
 
     public String getAccountNo() {

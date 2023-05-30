@@ -5,6 +5,7 @@ import com.sbc.psd2.data.UserInfo;
 import com.sbc.psd2.data.account.Account;
 import com.sbc.psd2.data.coresystem.CoreSystemAccountInfo;
 import com.sbc.psd2.data.creditTransfer.BGNCreditTransferOp;
+import com.sbc.psd2.data.rest.Amount;
 import com.sbc.psd2.data.rest.Balance;
 import com.sbc.psd2.data.rest.ReadTransactionsListResponse;
 import com.sbc.psd2.data.rest.Transactions;
@@ -35,5 +36,7 @@ public interface CoreSystemCommunicator {
   public void validateIBANs(HashMap<String, Account> accountMap, UserInfo userInfo) throws ApplicationException;
 
   public boolean confirmFunds(String accIban, BigDecimal amount, String currency) throws ApplicationException;
+//
+//  public Amount getTaxes(BGNCreditTransferOp op) throws ApplicationException;
 
 }

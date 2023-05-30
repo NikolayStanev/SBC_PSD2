@@ -401,7 +401,6 @@ public class MBIBCommunicator implements CoreSystemCommunicator {
   }
 
 
-
   public String makeTransaction(BGNCreditTransferOp op) throws ApplicationException {
     LogManager.trace(getClass(), "makeTransaction()", op.toString());
 

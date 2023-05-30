@@ -2,6 +2,7 @@ package com.sbc.psd2.controller;
 
 import com.sbc.common.exception.ApplicationException;
 import com.sbc.psd2.data.consent.ConsentOp;
+import com.sbc.psd2.data.coresystem.CoreSystemAccountInfo;
 import com.sbc.psd2.data.creditTransfer.BGNCreditTransferOp;
 
 /**

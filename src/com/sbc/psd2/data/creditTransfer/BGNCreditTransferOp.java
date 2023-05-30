@@ -29,6 +29,8 @@ public class BGNCreditTransferOp {
   // Mandatory
   private Amount instructedAmount;
   private AccountDetails debtorAccount;
+
+  private String debtorPhoneNumber;
   private String creditorName;
   private AccountDetails creditorAccount;
 
@@ -40,6 +42,10 @@ public class BGNCreditTransferOp {
   private String remittanceInformationUnstructured;
 
   private String customerNumber = "0";
+
+  private String transactionFee;
+
+  private String transactionFeeCurrency;
 
 
   private PSD2RequestCommonData commonData;
@@ -162,6 +168,30 @@ public class BGNCreditTransferOp {
 
   public PaymentType getPaymentType() {
     return paymentType;
+  }
+
+  public String getDebtorPhoneNumber() {
+    return debtorPhoneNumber;
+  }
+
+  public void setDebtorPhoneNumber(String debtorPhoneNumber) {
+    this.debtorPhoneNumber = debtorPhoneNumber;
+  }
+
+  public String getTransactionFee() {
+    return transactionFee;
+  }
+
+  public void setTransactionFee(String transactionFee) {
+    this.transactionFee = transactionFee;
+  }
+
+  public String getTransactionFeeCurrency() {
+    return transactionFeeCurrency;
+  }
+
+  public void setTransactionFeeCurrency(String transactionFeeCurrency) {
+    this.transactionFeeCurrency = transactionFeeCurrency;
   }
 
   public void setPaymentType(PaymentType paymentType) {

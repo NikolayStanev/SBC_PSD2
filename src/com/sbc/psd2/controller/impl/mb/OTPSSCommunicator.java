@@ -9,6 +9,7 @@ import com.sbc.psd2.controller.SCACommunicator;
 import com.sbc.psd2.data.PSD2RequestCommonData;
 import com.sbc.psd2.data.account.Account;
 import com.sbc.psd2.data.consent.ConsentOp;
+import com.sbc.psd2.data.coresystem.CoreSystemAccountInfo;
 import com.sbc.psd2.data.creditTransfer.BGNCreditTransferOp;
 import com.sbc.psd2.data.creditTransfer.dao.BGNCreditTransferOpDAO;
 import com.sbc.psd2.data.rest.AccountDetails;
