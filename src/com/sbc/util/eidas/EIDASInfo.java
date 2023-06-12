@@ -6,7 +6,7 @@ import org.bouncycastle.asn1.ASN1Encodable;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.cert.jcajce.JcaX509ExtensionUtils;
-import sun.rmi.runtime.Log;
+
 
 import java.security.cert.X509Certificate;
 import java.util.HashSet;

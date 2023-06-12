@@ -2,6 +2,7 @@ package com.sbc.psd2.controller.impl.mb;
 
 import com.sbc.common.util.ScaApproach;
 import com.sbc.psd2.controller.AbstractCommunicatorFactory;
+import com.sbc.psd2.controller.UserFilter;
 
 public class MBModelFactory extends AbstractCommunicatorFactory {
 
@@ -11,11 +12,7 @@ public class MBModelFactory extends AbstractCommunicatorFactory {
         coreSystemCommunicator = new MBIBCommunicator();
         identityManagementCommunicator = new MBIdentityManagementCommunicator();
         scaCommunicator = new OTPSSCommunicator();
-        userFilter = new MBUserFilter();
-
-        coreSystemCommunicatorEndPoint = "";
-        identityManagementCommunicatorEndPoint = "";
-        scaCommunicatorEndPoint = "";
+        userFilter = new UserFilter();
 
     }
 

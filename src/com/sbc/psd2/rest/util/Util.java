@@ -1,5 +1,6 @@
 package com.sbc.psd2.rest.util;
 
+import com.sbc.psd2.data.consent.ConsentOp;
 import com.sbc.psd2.rest.Headers;
 import com.sbc.util.eidas.EIDASInfo;
 import org.restlet.Request;
@@ -20,6 +21,8 @@ import java.net.URL;
  * To change this template use File | Settings | File Templates.
  */
 public class Util {
+
+  private static final char DELIMITER = '#';
   public static String getPSD2Op(Request request) {
     Reference requestRef = request.getResourceRef();
     String path = requestRef.getPath();
@@ -99,4 +102,22 @@ public class Util {
 
     return response.toString();
   }
+
+  public static String genTextForSigning(ConsentOp op) {
+    StringBuilder sb = new StringBuilder();
+    for (String iban : op.getAccountMap().keySet()) {
+      sb.append(iban);
+      sb.append(',');
+    }
+
+    String accounts = sb.toString();
+    if (accounts.length() > 0) {
+      accounts = accounts.substring(0, accounts.length() - 1);
+    }
+
+    String textForSigning = op.getConsentId() + DELIMITER + accounts;
+
+    return textForSigning;
+  }
+
 }

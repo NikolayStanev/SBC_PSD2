@@ -191,4 +191,36 @@ public class TenNCoreAccount implements CoreSystemAccountInfo {
     public void setBranch(String branch) {
         this.branchCode = branch;
     }
+
+    public String getAccountClass() {
+        return accountClass;
+    }
+
+    public void setAccountClass(String accountClass) {
+        this.accountClass = accountClass;
+    }
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
+    }
+
+    public String getBranchCode() {
+        return branchCode;
+    }
+
+    public void setBranchCode(String branchCode) {
+        this.branchCode = branchCode;
+    }
+
+    public String getIbanAccountNumber() {
+        return ibanAccountNumber;
+    }
+
+    public void setIbanAccountNumber(String ibanAccountNumber) {
+        this.ibanAccountNumber = ibanAccountNumber;
+    }
 }

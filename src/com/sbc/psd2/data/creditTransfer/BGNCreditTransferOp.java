@@ -4,6 +4,7 @@ import com.sbc.common.exception.ApplicationException;
 import com.sbc.common.logging.LogManager;
 import com.sbc.common.util.Util;
 import com.sbc.psd2.data.PSD2RequestCommonData;
+import com.sbc.psd2.data.UserInfo;
 import com.sbc.psd2.data.creditTransfer.dao.BGNCreditTransferOpDAO;
 import com.sbc.psd2.data.rest.AccountDetails;
 import com.sbc.psd2.data.rest.Amount;
@@ -13,6 +14,7 @@ import com.sbc.psd2.controller.UserFilter;
 
 import java.util.Date;
 import java.util.UUID;
+
 
 /**
  * Created with IntelliJ IDEA.
@@ -70,11 +72,11 @@ public class BGNCreditTransferOp {
     this.commonData = commonData;
   }
 
-  public static BGNCreditTransferOp buildBGNCreditTransferOp(BGNCreditTransferRequest request) {
+  public static BGNCreditTransferOp buildBGNCreditTransferOp(BGNCreditTransferRequest request, UserInfo userInfo) {
     String tppID = UserFilter.getEIDASInfo().getTppAuthNumber();
 
     PSD2RequestCommonData commonInfo = new PSD2RequestCommonData(request.getxRequestID(), request.getPsuID(),
-            request.getPsuIPAddress(), request.getIp(), request.getConsentID(), tppID);
+            request.getPsuIPAddress(), userInfo.getCallerIP(), request.getConsentID(), tppID);
 
     String paymentId = UUID.randomUUID().toString();
     String transactionStatus = TransactionStatuses.RECEIVED;

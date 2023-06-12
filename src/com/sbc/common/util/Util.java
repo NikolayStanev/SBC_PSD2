@@ -1,9 +1,15 @@
 package com.sbc.common.util;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sbc.common.logging.LogManager;
+import com.sbc.psd2.data.tenN.pojo.ErrorPojo;
+import com.sbc.psd2.rest.util.HttpClient;
+
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESedeKeySpec;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
@@ -26,6 +32,16 @@ public class Util {
   public static SimpleDateFormat format = new SimpleDateFormat("[dd.MM.yyyy HH:mm:ss.SSS]", Locale.US);
   public static SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.US);
 
+
+  public static <T> T stringToJson(Class<T> c, String string) throws IOException {
+
+    ObjectMapper objectMapper = new ObjectMapper();
+
+    T response = objectMapper.readValue(string, c);
+
+    return response;
+
+  }
 
   public static ArrayList<String> parse(String values) {
     ArrayList<String> list = new ArrayList<String>();

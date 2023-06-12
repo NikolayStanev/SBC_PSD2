@@ -13,12 +13,6 @@ public interface ImplModelFactory {
 
     public SCACommunicator getScaCommunicator();
 
-    public String getCoreSystemCommunicatorEndPoint();
-
-    public String getIdentityManagementCommunicatorEndPoint();
-
-    public String getScaCommunicatorEndPoint();
-
     public UserFilter getUserFilter();
 
 }

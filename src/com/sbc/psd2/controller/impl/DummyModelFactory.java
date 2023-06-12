@@ -13,9 +13,5 @@ public class DummyModelFactory extends AbstractCommunicatorFactory {
         scaCommunicator = new DummySCACommunicator();
         userFilter = new DummyUserFilter();
 
-        coreSystemCommunicatorEndPoint = "";
-        identityManagementCommunicatorEndPoint = "https://auth-test.10npay.com/connect";
-        scaCommunicatorEndPoint = "";
-
     }
 }

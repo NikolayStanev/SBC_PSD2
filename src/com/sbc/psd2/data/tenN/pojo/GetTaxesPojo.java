@@ -4,21 +4,23 @@ import java.math.BigDecimal;
 
 public class GetTaxesPojo {
 
-    public String accountNo;
+    public String customerAccount;
     public BigDecimal amount;
-    public String productCode;
+    public String customerNumber;
 
-    public GetTaxesPojo(String accountNo, BigDecimal amount) {
-        this.accountNo = accountNo;
+
+    public GetTaxesPojo(String customerAccount, BigDecimal amount, String customerNumber) {
+        this.customerAccount = customerAccount;
         this.amount = amount;
+        this.customerNumber = customerNumber;
     }
 
-    public String getAccountNo() {
-        return accountNo;
+    public String getCustomerAccount() {
+        return customerAccount;
     }
 
-    public void setAccountNo(String accountNo) {
-        this.accountNo = accountNo;
+    public void setCustomerAccount(String customerAccount) {
+        this.customerAccount = customerAccount;
     }
 
     public BigDecimal getAmount() {
@@ -29,11 +31,11 @@ public class GetTaxesPojo {
         this.amount = amount;
     }
 
-    public String getProductCode() {
-        return productCode;
+    public String getCustomerNumber() {
+        return customerNumber;
     }
 
-    public void setProductCode(String productCode) {
-        this.productCode = productCode;
+    public void setCustomerNumber(String customerNumber) {
+        this.customerNumber = customerNumber;
     }
 }

@@ -89,9 +89,7 @@ public class EIDASCheck {
       }
     }
 
-
       EIDASInfo info = EIDASInfo.build(eidas);
-
 
       // todo: additional checks!
 

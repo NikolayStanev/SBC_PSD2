@@ -3,10 +3,12 @@ package com.sbc.psd2.rest.util;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sbc.common.exception.ApplicationException;
 import com.sbc.common.logging.LogManager;
+import com.sbc.psd2.data.tenN.pojo.ErrorPojo;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,10 +78,8 @@ public class HttpClient {
             }
 
             connection = prepareRequest(POST);
-
             connection.setRequestProperty("Content-Length",
                     Integer.toString(requestBodyS.getBytes().length));
-
             connection.setDoOutput(true);
 
             DataOutputStream wr = new DataOutputStream (
@@ -89,14 +89,22 @@ public class HttpClient {
 
             String responseS = getResponse(connection);
 
+            if(responseS.contains("errors")) {
+
+                ErrorPojo errorPojo =  objectMapper.readValue(responseS, ErrorPojo.class);
+                LogManager.trace(HttpClient.class, "doPost() returned error - " + errorPojo.getErrors().getErrorsString());
+
+                throw new ApplicationException("Server returned error on post request: " + errorPojo);
+            }
+
             T response = objectMapper.readValue(responseS, c);
-
-
 
             return response;
 
 
-        }catch (Exception e) {
+        }catch (ApplicationException exception){
+            throw exception;
+        } catch (Exception e) {
             LogManager.log(HttpClient.class, e);
 
             throw new ApplicationException(ApplicationException.INTERNAL_ERROR, e.getMessage());
@@ -107,6 +115,8 @@ public class HttpClient {
             }
         }
     }
+
+
 
     public <T>T doGet (Class<T> c) {
 
@@ -122,6 +132,14 @@ public class HttpClient {
             connection.setUseCaches(false);
 
             String responseS = getResponse(connection);
+
+            if(responseS.contains("errors")) {
+
+                ErrorPojo errorPojo =  objectMapper.readValue(responseS, ErrorPojo.class);
+                LogManager.trace(HttpClient.class, "doPost() returned error - " + errorPojo.getErrors().getErrorsString());
+
+                throw new ApplicationException("Server returned error on get request: " + errorPojo);
+            }
 
             T response = objectMapper.readValue(responseS, c);
 
@@ -151,6 +169,7 @@ public class HttpClient {
         }
         connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod(methodType);
+        connection.setRequestProperty("Accept-Charset", "UTF-8");
         connection.setRequestProperty("Content-Type", contentType);
         connection.setUseCaches(false);
 
@@ -177,9 +196,15 @@ public class HttpClient {
     }
 
     private String getResponse (HttpURLConnection connection) throws IOException {
+        connection.getResponseCode();
 
-        InputStream is = connection.getInputStream();
-        BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+        InputStream is = connection.getErrorStream();
+
+        if(is == null) {
+            is = connection.getInputStream();
+        }
+
+        BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
         StringBuffer response = new StringBuffer();
         String line;
 
@@ -195,17 +220,43 @@ public class HttpClient {
 
     public static void main (String[] args) {
 
-        try {
-            HttpClient client = new HttpClient(new URL("https://wannatest.free.beeceptor.com/id"),
-                    null,
-                    null,
-                    null ,
-                    null,
-                    null);
+        try{
+            final String charset = "UTF-8";
+            String token = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjAwMDc5NUNFQjZERDlFMUQ2QzFFMzkxNDAyRDY0QTM4QzhERkNEMEUiLCJ0eXAiOiJhdCtqd3QiLCJ4NXQiOiJBQWVWenJiZG5oMXNIamtVQXRaS09NamZ6UTQifQ.eyJuYmYiOjE2ODU2MDkxNzgsImV4cCI6MTY4NTYxMjc3OCwiaXNzIjoiaHR0cHM6Ly9hdXRoLXRlc3QuMTBucGF5LmNvbSIsImF1ZCI6WyJJZGVudGl0eVNlcnZlckFwaSIsIlRlbm4uQ1JNIl0sImNsaWVudF9pZCI6IlNpcm1hLk9wZW5CYW5raW5nIiwic3ViIjoiMCIsInRlbmFudCI6IjEyIiwicm9sZSI6Ik9wZW5CYW5raW5nIiwic2NvcGUiOlsiSWRlbnRpdHlTZXJ2ZXJBcGkiLCJUZW5uLkNSTSJdLCJjbmYiOnsieDV0I1MyNTYiOiJFQjNENDk3RUVFMDQ4OTE1MDUyODk4MzAyOUM2Q0IyOTA4Nzg0MUUxIn19.mJJrO6i-EGi3U4jDHJxrdmjB55h2j4LVwTsL1DgwpMcL6aZ8aiMRGWPOGWHcKgshZCAx6mk_GO3o6Uass8ZszPvzgxDtRuJk04IzoNT2nbV66-NZU58BmiAGhfuwU9vCdMRpjUECGPXBvsp8KgbwCr6TucxYq-dD0HROlnMu8mG3iOtjEgLMEKPglQqURviB1KIW6Bvv7IpTmG5L8NUziCxEf7YlSNIgLCb_dv7mJJfNdCBU5pc08IRl3JT0izUqZLaikK2ZN7hh9qD8YGFgvXktlDmEmQ4mJkENsvqhA6tBtT93NjYnC5z4W4gdomcdVzDBx3WeAcXNum-WXM0uDw";
+            // Create the connection
+            HttpURLConnection connection = (HttpURLConnection) new URL("https://crm-api-test.10npay.com/api/v1/OpenBanking/individual/iban").openConnection();
+            // setDoOutput(true) implicitly set's the request type to POST
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Accept-Charset", charset);
+            connection.setRequestProperty("Content-type", "application/json");
+            connection.setRequestProperty("Authorization", "Bearer " + token);
+    //        connection.setRequestProperty("Content-Type", contentType);//"text/xml");
+            String content = "{\"ibanNumber\": \"BG06TEPJ40131000100029\"}";
+            // Write to the connection
+            OutputStream output = connection.getOutputStream();
+            output.write(content.getBytes(charset));
+            output.close();
 
-            MyTestCLass myTestCLass = client.doGet(MyTestCLass.class);
+            // Check the error stream first, if this is null then there have been no issues with the request String error
+            int errorCode = connection.getResponseCode();
+            System.out.println(errorCode);
 
-            System.out.println(myTestCLass.toString());
+            InputStream inputStream = connection.getErrorStream();
+            if (inputStream == null)
+                inputStream = connection.getInputStream();
+
+            // Read everything from our stream
+            BufferedReader responseReader = new BufferedReader(new InputStreamReader(inputStream, charset));
+
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = responseReader.readLine()) != null) {
+                response.append(inputLine);
+            }
+            responseReader.close();
+
+            System.out.println(response);
 
         }catch (Exception e) {
             e.printStackTrace();

@@ -1,6 +1,7 @@
 package com.sbc.psd2.controller.impl.tenN.communicators;
 
 import com.sbc.common.logging.LogManager;
+import com.sbc.psd2.controller.TaskExecutor;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -14,6 +15,8 @@ public class TenNApiTokenScheduler implements ServletContextListener {
 
 
     public void contextInitialized(ServletContextEvent event) {
+        LogManager.trace(getClass(), "Starting TenNApiTokenScheduler..,");
+
         try {
             scheduler.scheduleAtFixedRate(new ApiTokenTask(), 0, 50, TimeUnit.MINUTES);
 
@@ -30,6 +33,9 @@ public class TenNApiTokenScheduler implements ServletContextListener {
             LogManager.trace(getClass(), "Shutdown TenNApiTokenScheduler..,");
             scheduler.shutdownNow();
             LogManager.trace(getClass(), "Shutdown TenNApiTokenScheduler finished.");
+
+            TaskExecutor.INSTANCE.stop();
+
         } catch (Exception e) {
             LogManager.log(getClass(), e);
         }//load data here

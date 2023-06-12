@@ -6,6 +6,7 @@ import com.sbc.psd2.config.AppConfig;
 import com.sbc.psd2.rest.resources.AccountDataResource;
 import com.sbc.psd2.rest.resources.ConsentResource;
 import com.sbc.psd2.rest.resources.CreditTransferResource;
+import com.sbc.psd2.rest.resources.OpenResource;
 import org.restlet.Context;
 import org.restlet.Restlet;
 import org.restlet.ext.jaxrs.JaxRsApplication;
@@ -21,7 +22,8 @@ public class BackendJAXRSApp extends JaxRsApplication {
    private static Class<?>[] rootResources = {
             CreditTransferResource.class,
             AccountDataResource.class,
-            ConsentResource.class
+            ConsentResource.class,
+            OpenResource.class
 
     };
 
@@ -65,7 +67,7 @@ public class BackendJAXRSApp extends JaxRsApplication {
 
 
     private void init() {
-      testMode = AppConfig.buildInstance().isTestMode();
+      testMode = AppConfig.getInstance().isTestMode();
     }
 
   public boolean isTestMode() {

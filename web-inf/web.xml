@@ -24,6 +24,9 @@
     <listener>
         <listener-class>com.sbc.psd2.servlet.StatsCollectorListener</listener-class>
     </listener>
+    <listener>
+        <listener-class>com.sbc.psd2.controller.impl.tenN.communicators.TenNApiTokenScheduler</listener-class>
+    </listener>
 
 
     <welcome-file-list>

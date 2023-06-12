@@ -31,7 +31,7 @@ import java.util.HashMap;
  * To change this template use File | Settings | File Templates.
  */
 public class OTPSSCommunicator implements SCACommunicator {
-  private static final char DELIMITER = '#';
+
 
   private static final String URL_CONSENT_OTP;
   private static final String URL_PAYMENT_OTP;
@@ -82,7 +82,7 @@ public class OTPSSCommunicator implements SCACommunicator {
     // Install the all-trusting host verifier
     HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
 
-    String endPoint = AbstractCommunicatorFactory.getInstance().getScaCommunicatorEndPoint();
+    String endPoint = AppConfig.getInstance().getScaCommunicatorEndPoint();
 
 
     URL_CONSENT_OTP = endPoint + "/THE_HUB/Enquiry";
@@ -131,7 +131,7 @@ public class OTPSSCommunicator implements SCACommunicator {
 
       String thumbprint = UserFilter.getEIDASInfo().getThumbprint();
       String token = UserFilter.getUserInfo().getSessionID();
-      String textForSigning = "Please authorize consent: " + genTextForSigning(op);
+      String textForSigning = "Please authorize consent: " + Util.genTextForSigning(op);
 
       String xml = CONSENT_OTP_PUSH_XML.replace(PARAM_TOKEN, token);
       xml = xml.replace(PARAM_THUMBPRINT, thumbprint);
@@ -166,7 +166,7 @@ public class OTPSSCommunicator implements SCACommunicator {
 
       String thumbprint = UserFilter.getEIDASInfo().getThumbprint();
       String token = UserFilter.getUserInfo().getSessionID();
-      String textForSigning = "Please authorize consent: " + genTextForSigning(op);
+      String textForSigning = "Please authorize consent: " + Util.genTextForSigning(op);
 
       String xml = CONSENT_OTP_CHECK_XML.replace(PARAM_TOKEN, token);
       xml = xml.replace(PARAM_THUMBPRINT, thumbprint);
@@ -254,24 +254,6 @@ public class OTPSSCommunicator implements SCACommunicator {
 
     return true;
   }
-
-  public static String genTextForSigning(ConsentOp op) {
-    StringBuilder sb = new StringBuilder();
-    for (String iban : op.getAccountMap().keySet()) {
-      sb.append(iban);
-      sb.append(',');
-    }
-
-    String accounts = sb.toString();
-    if (accounts.length() > 0) {
-      accounts = accounts.substring(0, accounts.length() - 1);
-    }
-
-    String textForSigning = op.getConsentId() + DELIMITER + accounts;
-
-    return textForSigning;
-  }
-
 
 
 

@@ -4,7 +4,7 @@ import com.sbc.common.exception.ApplicationException;
 import com.sbc.common.logging.LogManager;
 import com.sbc.psd2.controller.AbstractCodesMapper;
 import com.sbc.psd2.data.statuses.TransactionStatuses;
-import javafx.application.Application;
+
 
 import java.util.HashMap;
 

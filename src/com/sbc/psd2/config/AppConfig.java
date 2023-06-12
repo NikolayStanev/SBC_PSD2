@@ -16,8 +16,14 @@ import javax.naming.InitialContext;
 public class AppConfig {
   private boolean testMode;
 
+  private static AppConfig instance;
   private boolean isImmediateTransaction = false;
+  private String coreSystemCommunicatorEndPoint = "https://crm-api-test.10npay.com/api/v1/";
+  private String identityManagementCommunicatorEndPoint = "https://auth-test.10npay.com/connect";
 
+  private String scaCommunicatorEndPoint = "https://172.16.51.97/OTPSS_10n/Sign";
+  private String scaUser = "buts";
+  private String scaPassword = "pass1234";
   private Implementation implementation;
 
   public AppConfig() {
@@ -32,40 +38,22 @@ public class AppConfig {
     this.isImmediateTransaction = isImmediateTransaction;
   }
 
-  public boolean isTestMode() {
-    return testMode;
-  }
-
-  public Implementation getImplementation() {
-    return implementation;
-  }
-
-  public void setImplementation(Implementation implementation) {
-    this.implementation = implementation;
-  }
-
-  public void setTestMode(boolean testMode) {
-    this.testMode = testMode;
-  }
-
-  public boolean isImmediateTransaction() {
-    return isImmediateTransaction;
-  }
-
-  public void setImmediateTransaction(boolean immediateTransaction) {
-    isImmediateTransaction = immediateTransaction;
-  }
-
   @Override
   public String toString() {
     return "AppConfig{" +
-            "testMode=" + testMode + '\'' +
-            ", implementation='" + implementation + '\'' +
+            "testMode=" + testMode +
+            ", isImmediateTransaction=" + isImmediateTransaction +
+            ", coreSystemCommunicatorEndPoint='" + coreSystemCommunicatorEndPoint + '\'' +
+            ", identityManagementCommunicatorEndPoint='" + identityManagementCommunicatorEndPoint + '\'' +
+            ", scaCommunicatorEndPoint='" + scaCommunicatorEndPoint + '\'' +
+            ", scaUser='" + scaUser + '\'' +
+            ", scaPassword='" + scaPassword + '\'' +
+            ", implementation=" + implementation +
             '}';
   }
 
-  public synchronized static AppConfig buildInstance() {
-    AppConfig instance = null;
+  private synchronized static AppConfig buildInstance() {
+
     try {
       InitialContext initCtx = new InitialContext();
       Context envCtx = (Context) initCtx.lookup("java:comp/env");
@@ -95,4 +83,83 @@ public class AppConfig {
 
     return instance;
   }
+
+  public static AppConfig getInstance() {
+
+    if(instance == null) {
+      return buildInstance();
+    }
+
+    return instance;
+
+  }
+
+
+
+  public boolean isTestMode() {
+    return testMode;
+  }
+
+  public Implementation getImplementation() {
+    return implementation;
+  }
+
+  public void setImplementation(Implementation implementation) {
+    this.implementation = implementation;
+  }
+
+  public void setTestMode(boolean testMode) {
+    this.testMode = testMode;
+  }
+
+  public boolean isImmediateTransaction() {
+    return isImmediateTransaction;
+  }
+
+  public void setImmediateTransaction(boolean immediateTransaction) {
+    isImmediateTransaction = immediateTransaction;
+  }
+
+  public String getCoreSystemCommunicatorEndPoint() {
+    return coreSystemCommunicatorEndPoint;
+  }
+
+  public void setCoreSystemCommunicatorEndPoint(String coreSystemCommunicatorEndPoint) {
+    this.coreSystemCommunicatorEndPoint = coreSystemCommunicatorEndPoint;
+  }
+
+  public String getIdentityManagementCommunicatorEndPoint() {
+    return identityManagementCommunicatorEndPoint;
+  }
+
+  public void setIdentityManagementCommunicatorEndPoint(String identityManagementCommunicatorEndPoint) {
+    this.identityManagementCommunicatorEndPoint = identityManagementCommunicatorEndPoint;
+  }
+
+  public String getScaCommunicatorEndPoint() {
+    return scaCommunicatorEndPoint;
+  }
+
+  public void setScaCommunicatorEndPoint(String scaCommunicatorEndPoint) {
+    this.scaCommunicatorEndPoint = scaCommunicatorEndPoint;
+  }
+
+  public String getScaUser() {
+    return scaUser;
+  }
+
+  public void setScaUser(String scaUser) {
+    this.scaUser = scaUser;
+  }
+
+  public String getScaPassword() {
+    return scaPassword;
+  }
+
+  public void setScaPassword(String scaPassword) {
+    this.scaPassword = scaPassword;
+  }
+
+
+
 }

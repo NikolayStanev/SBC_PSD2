@@ -17,11 +17,6 @@ public class TenNModelFactory extends AbstractCommunicatorFactory {
         scaCommunicator = new TenNSCACommunicator();
         userFilter = new TenNUserFilter();
 
-        coreSystemCommunicatorEndPoint = "https://crm-api-test.10npay.com/api/v1/";
-        identityManagementCommunicatorEndPoint = "https://auth-test.10npay.com/connect";
-        scaCommunicatorEndPoint = "";
-
     }
-
 
 }

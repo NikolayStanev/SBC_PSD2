@@ -2,6 +2,7 @@ package com.sbc.psd2.controller.impl.tenN.communicators;
 
 import com.sbc.common.exception.ApplicationException;
 import com.sbc.common.logging.LogManager;
+import com.sbc.psd2.config.AppConfig;
 import com.sbc.psd2.controller.AbstractCommunicatorFactory;
 import com.sbc.psd2.controller.CoreSystemCommunicator;
 import com.sbc.psd2.controller.SCACommunicator;
@@ -30,13 +31,13 @@ public class TenNCoreSystemCommunicator implements CoreSystemCommunicator {
     private final String getTransactionStatusUrl = "OpenBanking/transaction-details";
 
     private final String makeTransactionUrl = "OpenBanking/money-transfer-to-3rd-party-iban";
-    private final String getTexes = "IndividualPayment/{id}/get-money-transfer-charge";
+    private final String getTexes = "OpenBanking/money-transfer-charge";
 
     private final String getAccountsUrl = "OpenBanking/individual";
 
-    private final String getAccountDetailsUrl = "OpenBanking/individual/account";
+    private final String getAccountDetailsUrl = "OpenBanking/individual/iban";
 
-    private final String getAccountBalancesUrl = "OpenBanking/individual/account";
+    private final String getAccountBalancesUrl = "OpenBanking/individual/iban";
 
     private final String readTransactionsDetailsUrl = "OpenBanking/transaction-details";
 
@@ -50,7 +51,7 @@ public class TenNCoreSystemCommunicator implements CoreSystemCommunicator {
 
         try{
 
-            URL getAllAccountsURL = new URL(AbstractCommunicatorFactory.getInstance().getCoreSystemCommunicatorEndPoint() + getTransactionStatusUrl);
+            URL getAllAccountsURL = new URL(AppConfig.getInstance().getCoreSystemCommunicatorEndPoint() + getTransactionStatusUrl);
 
             HashMap<String, String> headers = new HashMap<>();
             headers.put("Authorization", TenNIdentityManagementCommunicator.tokenType + " " + TenNIdentityManagementCommunicator.apiToken);
@@ -85,21 +86,21 @@ public class TenNCoreSystemCommunicator implements CoreSystemCommunicator {
             TenNCoreAccount tenNCoreAccount = getAccountDetails(op.getDebtorAccount().getIban().getIban());
 
             op.setDebtorPhoneNumber(tenNCoreAccount.getPhoneNumber());
+            op.setCustomerNumber(tenNCoreAccount.getCustomerNumber());
 
             //Call for taxes
-            URL getTaxesURL = new URL(AbstractCommunicatorFactory.getInstance().getCoreSystemCommunicatorEndPoint() + makeTransactionUrl.replace("{id}", tenNCoreAccount.getCustomerNumber()));
-            GetTaxesPojo getTaxesPojo = new GetTaxesPojo(tenNCoreAccount.getCustomerAccountNumber(),op.getInstructedAmount().getContent());
+            URL getTaxesURL = new URL(AppConfig.getInstance().getCoreSystemCommunicatorEndPoint() + getTexes.replace("{id}", tenNCoreAccount.getCustomerNumber()));
+            GetTaxesPojo getTaxesPojo = new GetTaxesPojo(tenNCoreAccount.getCustomerAccountNumber(),op.getInstructedAmount().getContent(), tenNCoreAccount.getCustomerNumber());
 
             HttpClient http = new HttpClient(getTaxesURL,"application/json", headers);
             http.setRequestBody(getTaxesPojo);
 
-            TenNTaxes taxes = http.doGet(TenNTaxes.class);
+//            TenNTaxes taxes = http.doPost(TenNTaxes.class);
 
             //add taxes to bgn transfer
-            op.setTransactionFeeCurrency(taxes.getTransactionFeeCurrency());
-            op.setTransactionFee(Integer.toString(taxes.getTransactionFee()));
+            op.setTransactionFeeCurrency("BGN");//taxes.getTransactionFeeCurrency());
+            op.setTransactionFee("1");//Integer.toString(taxes.getTransactionFee()));
 
-            //TODO: send taxes to SCA!
             SCACommunicator communicator = AbstractCommunicatorFactory.getInstance().getScaCommunicator();
             communicator.generateOTP(op);
 
@@ -115,7 +116,7 @@ public class TenNCoreSystemCommunicator implements CoreSystemCommunicator {
             requestBody.setProductCode(op.getPaymentType().getServiceLevel());
             requestBody.setNotes(op.getRemittanceInformationUnstructured());
 
-            URL makeTransaction = new URL(AbstractCommunicatorFactory.getInstance().getCoreSystemCommunicatorEndPoint() + makeTransactionUrl);
+            URL makeTransaction = new URL(AppConfig.getInstance().getCoreSystemCommunicatorEndPoint() + makeTransactionUrl);
 
             HttpClient httpClient = new HttpClient(makeTransaction, "application/json", headers);
             httpClient.setRequestBody(requestBody);
@@ -142,7 +143,7 @@ public class TenNCoreSystemCommunicator implements CoreSystemCommunicator {
 
         try {
 
-            URL getAllAccountsURL = new URL(AbstractCommunicatorFactory.getInstance().getCoreSystemCommunicatorEndPoint() + getAccountsUrl);
+            URL getAllAccountsURL = new URL(AppConfig.getInstance().getCoreSystemCommunicatorEndPoint() + getAccountsUrl);
 
             HashMap<String, String> headers = new HashMap<>();
             headers.put("Authorization", TenNIdentityManagementCommunicator.tokenType+ " " + TenNIdentityManagementCommunicator.apiToken);
@@ -172,7 +173,7 @@ public class TenNCoreSystemCommunicator implements CoreSystemCommunicator {
 
         try{
 
-            URL getAllAccountsURL = new URL(AbstractCommunicatorFactory.getInstance().getCoreSystemCommunicatorEndPoint() + getAccountDetailsUrl);
+            URL getAllAccountsURL = new URL(AppConfig.getInstance().getCoreSystemCommunicatorEndPoint() + getAccountDetailsUrl);
 
             HashMap<String, String> headers = new HashMap<>();
             headers.put("Authorization", TenNIdentityManagementCommunicator.tokenType + " " + TenNIdentityManagementCommunicator.apiToken);
@@ -202,7 +203,7 @@ public class TenNCoreSystemCommunicator implements CoreSystemCommunicator {
 
         try{
 
-            URL getAllAccountsURL = new URL(AbstractCommunicatorFactory.getInstance().getCoreSystemCommunicatorEndPoint() + getAccountBalancesUrl);
+            URL getAllAccountsURL = new URL(AppConfig.getInstance().getCoreSystemCommunicatorEndPoint() + getAccountBalancesUrl);
 
             HashMap<String, String> headers = new HashMap<>();
             headers.put("Authorization", TenNIdentityManagementCommunicator.tokenType + " " + TenNIdentityManagementCommunicator.apiToken);
@@ -215,7 +216,7 @@ public class TenNCoreSystemCommunicator implements CoreSystemCommunicator {
 
             TenNCoreAccount coreAccount = httpClient.doPost(TenNCoreAccount.class);
 
-            balances.add(new Balance(BalanceTypes.AUTHORIZED,new Amount(coreAccount.getCurrency(),new BigDecimal(coreAccount.getCurrentBalance()))));
+            balances.add(new Balance(BalanceTypes.AUTHORIZED,new Amount(coreAccount.getCurrency(), new BigDecimal(coreAccount.getCurrentBalance()))));
 
             LogManager.trace(getClass(), "getAccountDetails() returns: " + coreAccount.getIban());
 
@@ -233,7 +234,7 @@ public class TenNCoreSystemCommunicator implements CoreSystemCommunicator {
 
         try{
 
-            URL readTransactionsDetailsURL = new URL(AbstractCommunicatorFactory.getInstance().getCoreSystemCommunicatorEndPoint() + readTransactionsDetailsUrl);
+            URL readTransactionsDetailsURL = new URL(AppConfig.getInstance().getCoreSystemCommunicatorEndPoint() + readTransactionsDetailsUrl);
 
             HashMap<String, String> headers = new HashMap<>();
             headers.put("Authorization", TenNIdentityManagementCommunicator.tokenType + " " + TenNIdentityManagementCommunicator.apiToken);

@@ -122,7 +122,6 @@ public class BGNCreditTransferOpDAO {
       ocs.setInt(1, op.getDbID());
       ocs.setString(2, op.getTransactionStatus());
       ocs.setString(3, op.getExtRefID());
-      ocs.setString(4,op.getCustomerNumber());
 
       ocs.execute();
 

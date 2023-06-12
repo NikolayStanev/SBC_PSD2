@@ -29,8 +29,6 @@ public class CreditTransferResource {
 
     LogManager.trace(getClass(), "doBGNCreditTransfer", request.toString());
 
-    UserFilter.checkUserIDToken();
-
     Headers headers = UserFilter.getHeaders();
 
     // Should consent to be checked at all?
@@ -76,12 +74,12 @@ public class CreditTransferResource {
     // set SCA_APPROACH header into response headers
     headers.getResponseHeaders().add(Headers.HEADER_SCA_APPROACH, Headers.getValueScaApproach());
 
-    BGNCreditTransferOp op = BGNCreditTransferOp.buildBGNCreditTransferOp(request);
-
     // check accounts and user relation
     // it will throw ApplicationException in case of invalid op params
     // which will result in appropriate HTTP response code and message
     UserInfo userInfo = UserFilter.getUserInfo();
+
+    BGNCreditTransferOp op = BGNCreditTransferOp.buildBGNCreditTransferOp(request, userInfo);
 
     CoreSystemCommunicator csCommunicator = AbstractCommunicatorFactory.getInstance().getCoreSystemCommunicator();
 
@@ -97,7 +95,7 @@ public class CreditTransferResource {
     //  bookTransaction(op);
     //}
 
-    AppConfig appConfig = AppConfig.buildInstance();
+    AppConfig appConfig = AppConfig.getInstance();
 
     if (appConfig.isImmediateTransaction()) {
       TaskExecutor.INSTANCE.bookTransactionAsync(op);

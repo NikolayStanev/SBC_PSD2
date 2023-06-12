@@ -82,7 +82,7 @@ public class MBIBCommunicator implements CoreSystemCommunicator {
 
 
   static {
-    String endPoint = AbstractCommunicatorFactory.getInstance().getCoreSystemCommunicatorEndPoint();
+    String endPoint = AppConfig.getInstance().getCoreSystemCommunicatorEndPoint();
 
 
     URL_PAYMENT_OTP = endPoint + "/THE_HUB/Package";

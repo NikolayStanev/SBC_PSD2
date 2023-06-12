@@ -29,7 +29,7 @@ import java.security.cert.X509Certificate;
 
 
 
-public abstract class UserFilter extends Filter {
+public class UserFilter extends Filter {
   protected static InheritableThreadLocal<Headers> threadLocalHeaders = new InheritableThreadLocal<Headers>();
   protected static InheritableThreadLocal<EIDASInfo> threadLocalEIDASInfo = new InheritableThreadLocal<>();
   protected static InheritableThreadLocal<UserInfo> threadLocalUser = new InheritableThreadLocal<>();

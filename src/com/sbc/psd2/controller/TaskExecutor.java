@@ -91,6 +91,10 @@ public class TaskExecutor {
   }
 
   protected void finalize() {
+    stop();
+  }
+  public void stop() {
+    System.out.println("Task executor finalize!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     executor.shutdownNow();
   }
 

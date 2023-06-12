@@ -16,9 +16,6 @@ public abstract class AbstractCommunicatorFactory implements ImplModelFactory{
     protected SCACommunicator scaCommunicator;
     protected UserFilter userFilter;
 
-    protected String coreSystemCommunicatorEndPoint;
-    protected String identityManagementCommunicatorEndPoint ;
-    protected String scaCommunicatorEndPoint;
 
 
     private static AbstractCommunicatorFactory instance = null;
@@ -37,7 +34,7 @@ public abstract class AbstractCommunicatorFactory implements ImplModelFactory{
     private static AbstractCommunicatorFactory buildInstance () {
         LogManager.trace(AbstractCommunicatorFactory.class,"Building ImplModelFactory...");
 
-        AppConfig appConfig = AppConfig.buildInstance();
+        AppConfig appConfig = AppConfig.getInstance();
         Implementation implementation = appConfig.getImplementation();
 
         switch (implementation) {
@@ -81,18 +78,33 @@ public abstract class AbstractCommunicatorFactory implements ImplModelFactory{
         return userFilter;
     }
 
-    @Override
-    public String getCoreSystemCommunicatorEndPoint() {
-        return coreSystemCommunicatorEndPoint;
+    public ScaApproach getScaApproach() {
+        return scaApproach;
     }
 
-    @Override
-    public String getIdentityManagementCommunicatorEndPoint() {
-        return identityManagementCommunicatorEndPoint;
+    public void setScaApproach(ScaApproach scaApproach) {
+        this.scaApproach = scaApproach;
     }
 
-    @Override
-    public String getScaCommunicatorEndPoint() {
-        return scaCommunicatorEndPoint;
+    public void setCoreSystemCommunicator(CoreSystemCommunicator coreSystemCommunicator) {
+        this.coreSystemCommunicator = coreSystemCommunicator;
     }
+
+    public void setIdentityManagementCommunicator(IdentityManagementCommunicator identityManagementCommunicator) {
+        this.identityManagementCommunicator = identityManagementCommunicator;
+    }
+
+    public void setScaCommunicator(SCACommunicator scaCommunicator) {
+        this.scaCommunicator = scaCommunicator;
+    }
+
+    public void setUserFilter(UserFilter userFilter) {
+        this.userFilter = userFilter;
+    }
+
+    public static void setInstance(AbstractCommunicatorFactory instance) {
+        AbstractCommunicatorFactory.instance = instance;
+    }
+
+
 }

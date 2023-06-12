@@ -19,7 +19,7 @@ public class MBIdentityManagementCommunicator implements IdentityManagementCommu
   public static final String URL;
 
   static {
-    String endPoint = AbstractCommunicatorFactory.getInstance().getIdentityManagementCommunicatorEndPoint();
+    String endPoint = AppConfig.getInstance().getIdentityManagementCommunicatorEndPoint();
 
     URL = endPoint + "/THE_HUB/Home";
   }

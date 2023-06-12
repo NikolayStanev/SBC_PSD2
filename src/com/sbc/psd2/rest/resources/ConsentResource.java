@@ -49,7 +49,7 @@ public class ConsentResource {
 
     ConsentOpDAO.createConsent(op);
 
-    AppConfig appConfig = AppConfig.buildInstance();
+    AppConfig appConfig = AppConfig.getInstance();
 
     if (appConfig.isImmediateTransaction()) {
       TaskExecutor.INSTANCE.startConsentAuth(op);
