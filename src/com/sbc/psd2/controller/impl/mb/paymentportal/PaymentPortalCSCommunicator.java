@@ -35,9 +35,10 @@ public class PaymentPortalCSCommunicator implements CoreSystemCommunicator {
   private static final String MAKE_TRANSACTION = "{ ? = call UBXPSD2GATE.GATE_TO_CORE.makeTransaction(?,?,?,?,?) }";
 
 
-  public String getTransactionStatus(String refID) throws ApplicationException {
-    LogManager.trace(PaymentPortalCSCommunicator.class, "getTransactionStatus()", refID);
+  public String getTransactionStatus(BGNCreditTransferOp op) throws ApplicationException {
+    LogManager.trace(PaymentPortalCSCommunicator.class, "getTransactionStatus()", op.getExtRefID());
 
+    String refID = op.getExtRefID();
     Connection connection = null;
 
     CallableStatement ocs = null;
@@ -93,7 +94,6 @@ public class PaymentPortalCSCommunicator implements CoreSystemCommunicator {
 //                           ip_amount in number,        --- сума
 //                                   ip_ccy in varchar2,         --- валута / за сега само BGN /
 //                                   op_fc_ref out varchar2 ) --- връща се референцията на транзацията ако е
-
 
   public String makeTransaction(BGNCreditTransferOp op) throws ApplicationException {
     LogManager.trace(PaymentPortalCSCommunicator.class, "makeTransaction()", op.toString());

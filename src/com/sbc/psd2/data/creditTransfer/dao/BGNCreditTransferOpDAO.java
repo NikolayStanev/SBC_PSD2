@@ -26,7 +26,7 @@ import java.sql.SQLException;
  */
 public class BGNCreditTransferOpDAO {
   private static final String SP_INSERT_BGN_TRANSFER_OP = "{call ubxpsd2.psd2.insertBGNTrans(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
-  private static final String SP_UPDATE_BGN_TRANSFER_OP = "{call ubxpsd2.psd2.updateBGNTrans(?,?,?)}";
+  private static final String SP_UPDATE_BGN_TRANSFER_OP = "{call ubxpsd2.psd2.updateBGNTrans(?,?,?,?,?,?)}";
   private static final String SP_GET_BGN_TRANSFER_OP_BY_PMNT_ID = "{call ubxpsd2.psd2.getBGNTransByPmntID(?,?,?)}";
 
   public static BGNCreditTransferOp createTransferOp(BGNCreditTransferOp op) throws ApplicationException {
@@ -122,7 +122,9 @@ public class BGNCreditTransferOpDAO {
       ocs.setInt(1, op.getDbID());
       ocs.setString(2, op.getTransactionStatus());
       ocs.setString(3, op.getExtRefID());
-
+      ocs.setString(4,op.getCustomerNumber());
+      ocs.setString(5, op.getTransactionFee());
+      ocs.setString(6, op.getTransactionFeeCurrency());
       ocs.execute();
 
       connection.commit();
@@ -197,6 +199,9 @@ public class BGNCreditTransferOpDAO {
         String remittanceInformationUnstructured = rs.getString(16);
         String consentID = rs.getString(17);
 //      tppID = rs.getString(18);
+        String customerNumber = rs.getString(18);
+        String transactionFee = rs.getString(19);
+        String transactionFeeCurrency = rs.getString(20);
 
         IBAN debitIBAN = new IBAN(debitIBANString);
         IBAN creditIBAN = new IBAN(creditIBANString);
@@ -212,7 +217,11 @@ public class BGNCreditTransferOpDAO {
                 debtorAccountDetails, creditorName,
                 creditorAccountDetails, transactionStatus,
                 paymentID, paymentType,
-                remittanceInformationUnstructured, commonData);
+                remittanceInformationUnstructured,
+                customerNumber,
+                transactionFee,
+                transactionFeeCurrency,
+                commonData);
       }
 
       return null;

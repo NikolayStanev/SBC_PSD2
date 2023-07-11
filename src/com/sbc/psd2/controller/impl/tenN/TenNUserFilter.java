@@ -46,6 +46,7 @@ public class TenNUserFilter extends UserFilter {
 
             userInfo.setSessionID(psuID);
             userInfo.setCallerIP(ip);
+
             threadLocalUser.set(userInfo);
 
         } catch (Exception e) {

@@ -30,7 +30,7 @@ import java.util.HashMap;
 
 // class for communication with FlexCube
 public class DummyCoreSystemCommunicator implements CoreSystemCommunicator {
-  public String getTransactionStatus(String refID) throws ApplicationException {
+  public String getTransactionStatus(BGNCreditTransferOp op) throws ApplicationException {
     return "ACCT";
   }
 

@@ -156,7 +156,7 @@ public class CreditTransferResource {
     if (extRefID != null) {
       CoreSystemCommunicator csCommunicator = AbstractCommunicatorFactory.getInstance().getCoreSystemCommunicator();
 
-      psd2Status = csCommunicator.getTransactionStatus(op.getExtRefID());
+      psd2Status = csCommunicator.getTransactionStatus(op);
 
       op.setTransactionStatus(psd2Status);
       BGNCreditTransferOpDAO.update(op);

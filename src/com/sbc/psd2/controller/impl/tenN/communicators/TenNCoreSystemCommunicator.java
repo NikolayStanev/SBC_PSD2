@@ -46,24 +46,23 @@ public class TenNCoreSystemCommunicator implements CoreSystemCommunicator {
     private final String confirmFundsUrl = "";
 
     @Override
-    public String getTransactionStatus(String refID) throws ApplicationException {
-        LogManager.trace(getClass(), "getTransactionStatus()", refID);
-
+    public String getTransactionStatus(BGNCreditTransferOp op) throws ApplicationException {
+        LogManager.trace(getClass(), "getTransactionStatus()", op.getExtRefID());
+        String refID = op.getExtRefID();
         try{
-
-            URL getAllAccountsURL = new URL(AppConfig.getInstance().getCoreSystemCommunicatorEndPoint() + getTransactionStatusUrl);
+            URL transactionStatusUrl = new URL(AppConfig.getInstance().getCoreSystemCommunicatorEndPoint() + getTransactionStatusUrl);
 
             HashMap<String, String> headers = new HashMap<>();
             headers.put("Authorization", TenNIdentityManagementCommunicator.tokenType + " " + TenNIdentityManagementCommunicator.apiToken);
 
-            String customerRef = UserFilter.getUserInfo().getUserID();
+            String customerRef = op.getCustomerNumber();
 
             GetTransactionDetailsPoJo requestBody = new GetTransactionDetailsPoJo(refID, customerRef);
 
-            HttpClient httpClient = new HttpClient(getAllAccountsURL, "application/json", headers);
+            HttpClient httpClient = new HttpClient(transactionStatusUrl, "application/json", headers);
             httpClient.setRequestBody(requestBody);
 
-            TenNCoreTransactionDetails transactionDetails = httpClient.doGet(TenNCoreTransactionDetails.class);
+            TenNCoreTransactionDetails transactionDetails = httpClient.doPost(TenNCoreTransactionDetails.class);
 
             LogManager.trace(getClass(), "getTransactionStatus() returns: " + transactionDetails.getTransactionStatus() + " status for ref " + refID);
 
@@ -90,16 +89,16 @@ public class TenNCoreSystemCommunicator implements CoreSystemCommunicator {
 
             //Call for taxes
             URL getTaxesURL = new URL(AppConfig.getInstance().getCoreSystemCommunicatorEndPoint() + getTexes.replace("{id}", tenNCoreAccount.getCustomerNumber()));
-            GetTaxesPojo getTaxesPojo = new GetTaxesPojo(tenNCoreAccount.getCustomerAccountNumber(),op.getInstructedAmount().getContent(), tenNCoreAccount.getCustomerNumber());
+            GetTaxesPojo getTaxesPojo = new GetTaxesPojo(tenNCoreAccount.getIbanAccountNumber(),op.getInstructedAmount().getContent(), tenNCoreAccount.getCustomerNumber());
 
             HttpClient http = new HttpClient(getTaxesURL,"application/json", headers);
             http.setRequestBody(getTaxesPojo);
 
-//            TenNTaxes taxes = http.doPost(TenNTaxes.class);
+            TenNTaxes taxes = http.doPost(TenNTaxes.class);
 
             //add taxes to bgn transfer
-            op.setTransactionFeeCurrency("BGN");//taxes.getTransactionFeeCurrency());
-            op.setTransactionFee("1");//Integer.toString(taxes.getTransactionFee()));
+            op.setTransactionFeeCurrency(taxes.getTransactionFeeCurrency());//"BGN");
+            op.setTransactionFee(Integer.toString(taxes.getTransactionFee())); //"1");
 
             SCACommunicator communicator = AbstractCommunicatorFactory.getInstance().getScaCommunicator();
             communicator.generateOTP(op);
@@ -112,6 +111,7 @@ public class TenNCoreSystemCommunicator implements CoreSystemCommunicator {
             requestBody.setSourceCustomerAccount(op.getDebtorAccount().getIban().getIban());
             requestBody.setBeneficiaryCustomerName(op.getCreditorName());
             requestBody.setBeneficiaryCustomerAccount(op.getCreditorAccount().getIban().getIban());
+            requestBody.setBeneficiaryCustomerAddress("PO 88 Sofia");
             requestBody.setAmount(op.getInstructedAmount().getContent());
             requestBody.setProductCode(op.getPaymentType().getServiceLevel());
             requestBody.setNotes(op.getRemittanceInformationUnstructured());

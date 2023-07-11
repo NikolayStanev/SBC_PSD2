@@ -289,7 +289,7 @@ public class OTPSSCommunicator implements SCACommunicator {
     PSD2RequestCommonData commonData = new PSD2RequestCommonData("abc1234567", "pib", null, null, "12234234", "PSDBG-BNB-121086224");
 
     BGNCreditTransferOp op = new BGNCreditTransferOp(-1, null, new Date(), amount,
-            debtorAccount, creditorName, creditorAccount, null, null, null, null, commonData);
+            debtorAccount, creditorName, creditorAccount, null, null, null, null,null,null,null, commonData);
     try {
       OTPSSCommunicator com = new OTPSSCommunicator();
 

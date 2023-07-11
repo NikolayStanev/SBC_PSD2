@@ -23,7 +23,7 @@ import java.util.HashMap;
  * To change this template use File | Settings | File Templates.
  */
 public interface CoreSystemCommunicator {
-  public String getTransactionStatus(String refID) throws ApplicationException;
+  public String getTransactionStatus(BGNCreditTransferOp op) throws ApplicationException;
   public String makeTransaction(BGNCreditTransferOp op) throws ApplicationException;
   public ArrayList<CoreSystemAccountInfo> getAccounts(UserInfo userInfo) throws ApplicationException;
   public CoreSystemAccountInfo getAccountDetails(String iban) throws ApplicationException;

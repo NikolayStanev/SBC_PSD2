@@ -57,6 +57,9 @@ public class BGNCreditTransferOp {
                              AccountDetails creditorAccount, String transactionStatus,
                              String paymentId, PaymentType paymentType,
                              String remittanceInformationUnstructured,
+                             String customerNumber,
+                             String transactionFee,
+                             String transactionFeeCurrency,
                              PSD2RequestCommonData commonData) {
     this.dbID = dbID;
     this.extRefID = extRefID;
@@ -69,6 +72,9 @@ public class BGNCreditTransferOp {
     this.paymentId = paymentId;
     this.paymentType = paymentType;
     this.remittanceInformationUnstructured = remittanceInformationUnstructured;
+    this.customerNumber = customerNumber;
+    this.transactionFee = transactionFee;
+    this.transactionFeeCurrency = transactionFeeCurrency;
     this.commonData = commonData;
   }
 
@@ -83,7 +89,7 @@ public class BGNCreditTransferOp {
 
     BGNCreditTransferOp op = new BGNCreditTransferOp(-1, null, null, request.getInstructedAmount(), request.getDebtorAccount(),
             request.getCreditorName(), request.getCreditorAccount(), transactionStatus,
-            paymentId, request.getPaymentType(), request.getRemittanceInformationUnstructured(), commonInfo);
+            paymentId, request.getPaymentType(), request.getRemittanceInformationUnstructured(),null,null,null, commonInfo);
 
     return op;
   }

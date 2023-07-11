@@ -107,9 +107,9 @@ public class MBIBCommunicator implements CoreSystemCommunicator {
           "</PSD2_ENQUIRY>";
 
 
-  public String getTransactionStatus(String refID) throws ApplicationException {
-    LogManager.trace(getClass(), "getTransactionStatus()", refID);
-
+  public String getTransactionStatus(BGNCreditTransferOp op) throws ApplicationException {
+    LogManager.trace(getClass(), "getTransactionStatus()", op.getExtRefID());
+    String refID = op.getExtRefID();
     String status = null;
 
 //    String thumbprint = "BDDC46B84F79B0F7DF4084824728460377F11170";

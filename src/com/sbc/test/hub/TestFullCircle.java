@@ -137,7 +137,7 @@ public class TestFullCircle {
     PSD2RequestCommonData commonData = new PSD2RequestCommonData("abc1234567", "pib", null, null, "12234234", EIDAS_TPP_ID);
 
     BGNCreditTransferOp op = new BGNCreditTransferOp(-1, null, new Date(), amount,
-            debtorAccount, payeeName, creditorAccount, null, null, null, null, commonData);
+            debtorAccount, payeeName, creditorAccount, null, null, null, null,null,null,null, commonData);
 
     return op;
   }
