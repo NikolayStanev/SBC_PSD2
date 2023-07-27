@@ -35,7 +35,7 @@ public abstract class AbstractCommunicatorFactory implements ImplModelFactory{
         LogManager.trace(AbstractCommunicatorFactory.class,"Building ImplModelFactory...");
 
         AppConfig appConfig = AppConfig.getInstance();
-        Implementation implementation = appConfig.getImplementation();
+        Implementation implementation = Implementation.valueOf(appConfig.getImplementation());
 
         switch (implementation) {
 

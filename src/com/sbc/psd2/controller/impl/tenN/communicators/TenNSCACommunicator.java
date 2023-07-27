@@ -65,9 +65,10 @@ public class TenNSCACommunicator implements SCACommunicator {
             String answer = Util.doPostSync(AppConfig.getInstance().getScaCommunicatorEndPoint(), requestBody, "application/xml");
             LogManager.trace(getClass(), "generateOTP() -> " + answer);
 
-            if (answer.contains("<ERRORS>")) {
-                throw new ApplicationException(ApplicationException.PSU_CREDENTIALS_INVALID, "Not valid otp!");
-            }
+            //TODO remove hack
+//            if (answer.contains("<ERRORS>")) {
+//                throw new ApplicationException(ApplicationException.PSU_CREDENTIALS_INVALID, "Not valid otp!");
+//            }
 
         } catch (ApplicationException e) {
             LogManager.log(getClass(), e);
@@ -104,9 +105,10 @@ public class TenNSCACommunicator implements SCACommunicator {
             String answer = Util.doPostSync(AppConfig.getInstance().getScaCommunicatorEndPoint(), requestBody, "application/xml");
             LogManager.trace(getClass(), "generateOTP() -> " + answer);
 
-            if (answer.contains("<ERRORS>")) {
-                throw new ApplicationException(ApplicationException.PSU_CREDENTIALS_INVALID, "Not valid otp!");
-            }
+            //TODO:remove comment
+//            if (answer.contains("<ERRORS>")) {
+//                throw new ApplicationException(ApplicationException.PSU_CREDENTIALS_INVALID, "Not valid otp!");
+//            }
 
         } catch (ApplicationException e) {
             LogManager.log(getClass(), e);

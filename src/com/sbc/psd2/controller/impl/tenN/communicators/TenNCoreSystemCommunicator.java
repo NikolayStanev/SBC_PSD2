@@ -22,9 +22,11 @@ import com.sbc.psd2.rest.util.HttpClient;
 
 import java.math.BigDecimal;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class TenNCoreSystemCommunicator implements CoreSystemCommunicator {
 
@@ -239,18 +241,26 @@ public class TenNCoreSystemCommunicator implements CoreSystemCommunicator {
             HashMap<String, String> headers = new HashMap<>();
             headers.put("Authorization", TenNIdentityManagementCommunicator.tokenType + " " + TenNIdentityManagementCommunicator.apiToken);
 
-            String customerRef = UserFilter.getUserInfo().getUserID();
+            String tppID = UserFilter.getEIDASInfo().getTppAuthNumber();
+            BGNCreditTransferOp op = BGNCreditTransferOpDAO.getOpByPaymentID(transactionId, tppID);
 
-            GetTransactionDetailsPoJo requestBody = new GetTransactionDetailsPoJo(transactionId, customerRef);
+            String customerRef = op.getCustomerNumber();
+
+            GetTransactionDetailsPoJo requestBody = new GetTransactionDetailsPoJo(op.getExtRefID(), customerRef);
 
             HttpClient httpClient = new HttpClient(readTransactionsDetailsURL, "application/json", headers);
             httpClient.setRequestBody(requestBody);
 
-            TenNCoreTransactionDetails transactionDetails = httpClient.doGet(TenNCoreTransactionDetails.class);
+            TenNCoreTransactionDetails transactionDetails = httpClient.doPost(TenNCoreTransactionDetails.class);
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+
+            Date date = formatter.parse(transactionDetails.getDateTime());
 
             Transactions transactions = new Transactions();
             transactions.setTransactionId(transactionId);
-            transactions.setBookingDate(new Date(transactionDetails.getDateTime()));
+            transactions.setBookingDate(date);
             transactions.setTransactionAmount(new Amount(transactionDetails.getCurrency(),new BigDecimal(transactionDetails.getTotalDebit())));
             transactions.setCreditorAccount(new AccountReference(transactionDetails.getBeneficiaryAccountNumber()));
             transactions.setCreditorName(transactionDetails.getBeneficiaryName());

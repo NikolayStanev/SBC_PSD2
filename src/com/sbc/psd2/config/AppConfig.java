@@ -6,6 +6,8 @@ import com.sbc.common.util.Implementation;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 
+import static com.sbc.common.util.Implementation.TenN;
+
 /**
  * Created with IntelliJ IDEA.
  * User: pavel.bonev
@@ -16,33 +18,33 @@ import javax.naming.InitialContext;
 public class AppConfig {
   private boolean testMode;
 
-  private static AppConfig instance;
-  private boolean isImmediateTransaction = false;
+//  private static AppConfig instance;
+  private boolean immediateTransaction = false;
   private String coreSystemCommunicatorEndPoint = "https://crm-api-test.10npay.com/api/v1/";
   private String identityManagementCommunicatorEndPoint = "https://auth-test.10npay.com/connect";
 
-  private String scaCommunicatorEndPoint = "https://172.16.51.97/OTPSS_10n/Sign";
+  private String scaCommunicatorEndPoint ="http://172.21.139.10:8080/OTPSS_10n/Sign"; //"https://172.16.51.97/OTPSS_10n/Sign";
   private String scaUser = "buts";
   private String scaPassword = "pass1234";
-  private Implementation implementation;
+  private String implementation;
 
   public AppConfig() {
 
   }
 
-  public AppConfig(boolean testMode,Implementation implementation,Boolean isImmediateTransaction) {
+  public AppConfig(boolean testMode,String implementation,Boolean immediateTransaction) {
     LogManager.trace(getClass(), "AppConfig()", "" + testMode, implementation.toString());
 
     this.testMode = testMode;
     this.implementation = implementation;
-    this.isImmediateTransaction = isImmediateTransaction;
+    this.immediateTransaction = immediateTransaction;
   }
 
   @Override
   public String toString() {
     return "AppConfig{" +
             "testMode=" + testMode +
-            ", isImmediateTransaction=" + isImmediateTransaction +
+            ", isImmediateTransaction=" + immediateTransaction +
             ", coreSystemCommunicatorEndPoint='" + coreSystemCommunicatorEndPoint + '\'' +
             ", identityManagementCommunicatorEndPoint='" + identityManagementCommunicatorEndPoint + '\'' +
             ", scaCommunicatorEndPoint='" + scaCommunicatorEndPoint + '\'' +
@@ -52,12 +54,13 @@ public class AppConfig {
             '}';
   }
 
-  private synchronized static AppConfig buildInstance() {
+  public synchronized static AppConfig getInstance() {
 
+    AppConfig instance = null;
     try {
       InitialContext initCtx = new InitialContext();
       Context envCtx = (Context) initCtx.lookup("java:comp/env");
-      instance = (AppConfig) envCtx.lookup("conf/appConfig");
+      instance = (AppConfig) envCtx.lookup("conf/appConfig11");
 
 
 
@@ -75,7 +78,7 @@ public class AppConfig {
 //              "com.sbc.psd2.controller.impl.tenN");
 
         instance = new AppConfig(true,
-                Implementation.TenN, true);
+                Implementation.TenN.toString(), true);
 
     }
 
@@ -84,15 +87,15 @@ public class AppConfig {
     return instance;
   }
 
-  public static AppConfig getInstance() {
-
-    if(instance == null) {
-      return buildInstance();
-    }
-
-    return instance;
-
-  }
+//  public static AppConfig getInstance() {
+//
+//    if(instance == null) {
+//      return buildInstance();
+//    }
+//
+//    return instance;
+//
+//  }
 
 
 
@@ -100,11 +103,11 @@ public class AppConfig {
     return testMode;
   }
 
-  public Implementation getImplementation() {
+  public String getImplementation() {
     return implementation;
   }
 
-  public void setImplementation(Implementation implementation) {
+  public void setImplementation(String implementation) {
     this.implementation = implementation;
   }
 
@@ -113,11 +116,11 @@ public class AppConfig {
   }
 
   public boolean isImmediateTransaction() {
-    return isImmediateTransaction;
+    return immediateTransaction;
   }
 
   public void setImmediateTransaction(boolean immediateTransaction) {
-    isImmediateTransaction = immediateTransaction;
+    this.immediateTransaction = immediateTransaction;
   }
 
   public String getCoreSystemCommunicatorEndPoint() {
@@ -159,6 +162,8 @@ public class AppConfig {
   public void setScaPassword(String scaPassword) {
     this.scaPassword = scaPassword;
   }
+
+
 
 
 

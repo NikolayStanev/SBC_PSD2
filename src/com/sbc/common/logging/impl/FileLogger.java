@@ -151,7 +151,7 @@ public class FileLogger implements Logger {
     } catch (Exception e) {
       info.writer = new PrintWriter(System.out);
       console = true;
-      log(getClass(), e);
+      e.printStackTrace();
     }
   }
 
@@ -169,7 +169,7 @@ public class FileLogger implements Logger {
     } catch (Exception e) {
       info.writer = new PrintWriter(System.out);
       console = true;
-      log(e);
+      e.printStackTrace();;
     }
   }
 
