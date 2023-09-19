@@ -29,19 +29,19 @@ public class Util {
 
     String op = "OP_UNKNOWN";
 
-    if (path.contains("/psd2/v1/accounts/")) {
+    if (path.contains("/psd2/v1/accounts")) {
       op = EIDASInfo.ROLE_AI;
     }
 
-    if (path.contains("/psd2/v1/consents/")) {
+    if (path.contains("/psd2/v1/consents")) {
       op = EIDASInfo.ROLE_AI;
     }
 
-    if (path.contains("/psd2/v1/bgn-credit-transfers/")) {
+    if (path.contains("/psd2/v1/payments/domestic-credit-transfers-bgn")) {
       op = EIDASInfo.ROLE_PI;
     }
 
-    if (path.contains("/psd2/v1/funds-confirmations/")) {
+    if (path.contains("/psd2/v1/funds-confirmations")) {
       op = EIDASInfo.ROLE_IC;
     }
 
