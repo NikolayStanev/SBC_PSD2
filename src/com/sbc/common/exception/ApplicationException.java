@@ -10,6 +10,7 @@ import org.restlet.resource.ResourceException;
  * Time: 11:03 AM
  * To change this template use File | Settings | File Templates.
  */
+
 public class ApplicationException extends ResourceException {
 //public class ApplicationException extends Exception {
   public static final int CERTIFICATE_INVALID = 401;
