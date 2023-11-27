@@ -66,9 +66,9 @@ public class TenNSCACommunicator implements SCACommunicator {
             LogManager.trace(getClass(), "generateOTP() -> " + answer);
 
             //TODO remove hack
-//            if (answer.contains("<ERRORS>")) {
-//                throw new ApplicationException(ApplicationException.PSU_CREDENTIALS_INVALID, "Not valid otp!");
-//            }
+            if (answer.contains("<ERRORS>")) {
+                throw new ApplicationException(ApplicationException.PSU_CREDENTIALS_INVALID, "Not valid otp!");
+            }
 
         } catch (ApplicationException e) {
             LogManager.log(getClass(), e);
@@ -92,7 +92,6 @@ public class TenNSCACommunicator implements SCACommunicator {
                                 + "Taxes for the payment are: " + op.getTransactionFee() + " " + op.getTransactionFeeCurrency();
             String requestBody = prepareXML(op.getDebtorPhoneNumber(), description, "PAYMENT", op.getExtRefID());
 
-            //TODO remove hack
             HostnameVerifier allHostsValid = new HostnameVerifier() {
                 public boolean verify(String hostname, SSLSession session) {
                     return true;
@@ -106,9 +105,9 @@ public class TenNSCACommunicator implements SCACommunicator {
             LogManager.trace(getClass(), "generateOTP() -> " + answer);
 
             //TODO:remove comment
-//            if (answer.contains("<ERRORS>")) {
-//                throw new ApplicationException(ApplicationException.PSU_CREDENTIALS_INVALID, "Not valid otp!");
-//            }
+            if (answer.contains("<ERRORS>")) {
+                throw new ApplicationException(ApplicationException.PSU_CREDENTIALS_INVALID, "Not valid otp!");
+            }
 
         } catch (ApplicationException e) {
             LogManager.log(getClass(), e);

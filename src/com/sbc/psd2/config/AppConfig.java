@@ -60,7 +60,7 @@ public class AppConfig {
     try {
       InitialContext initCtx = new InitialContext();
       Context envCtx = (Context) initCtx.lookup("java:comp/env");
-      instance = (AppConfig) envCtx.lookup("conf/appConfig11");
+      instance = (AppConfig) envCtx.lookup("conf/appConfig");
 
 
 
@@ -119,7 +119,7 @@ public class AppConfig {
     return immediateTransaction;
   }
 
-  public void setImmediateTransaction(boolean immediateTransaction) {
+  public void setIsImmediateTransaction(boolean immediateTransaction) {
     this.immediateTransaction = immediateTransaction;
   }
 
@@ -162,9 +162,6 @@ public class AppConfig {
   public void setScaPassword(String scaPassword) {
     this.scaPassword = scaPassword;
   }
-
-
-
 
 
 }
