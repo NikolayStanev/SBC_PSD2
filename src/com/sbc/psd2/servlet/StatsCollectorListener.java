@@ -2,9 +2,11 @@ package com.sbc.psd2.servlet;
 
 import com.sbc.common.logging.LogManager;
 import com.sbc.psd2.statistics.StatsCollector;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
 
 
-import javax.servlet.ServletContextEvent;
+//import javax.servlet.ServletContextEvent;
 import java.util.Date;
 import java.util.TimeZone;
 import java.util.concurrent.Executors;
@@ -18,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  * Time: 15:34
  * To change this template use File | Settings | File Templates.
  */
-public class StatsCollectorListener implements javax.servlet.ServletContextListener {
+public class StatsCollectorListener implements ServletContextListener {
   private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
   public void contextInitialized(ServletContextEvent event) {

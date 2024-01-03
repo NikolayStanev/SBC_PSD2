@@ -2,9 +2,11 @@ package com.sbc.psd2.controller.impl.tenN.communicators;
 
 import com.sbc.common.logging.LogManager;
 import com.sbc.psd2.controller.TaskExecutor;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
+//import javax.servlet.ServletContextEvent;
+//import javax.servlet.ServletContextListener;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;

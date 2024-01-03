@@ -11,6 +11,7 @@ import com.sbc.psd2.rest.Headers;
 import com.sbc.psd2.rest.util.Util;
 import com.sbc.util.eidas.EIDASCheck;
 import com.sbc.util.eidas.EIDASInfo;
+import jakarta.servlet.http.HttpServletRequest;
 import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.data.Header;
@@ -24,7 +25,7 @@ import org.restlet.representation.Representation;
 import org.restlet.routing.Filter;
 import org.restlet.util.Series;
 
-import javax.servlet.http.HttpServletRequest;
+//import javax.servlet.http.HttpServletRequest;
 import java.security.cert.X509Certificate;
 
 
