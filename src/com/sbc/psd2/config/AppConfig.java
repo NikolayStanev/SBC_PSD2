@@ -18,7 +18,7 @@ import static com.sbc.common.util.Implementation.TenN;
 public class AppConfig {
   private boolean testMode;
 
-//  private static AppConfig instance;
+  private static AppConfig instance;
   private boolean immediateTransaction = false;
   private String coreSystemCommunicatorEndPoint = "https://crm-api-test.10npay.com/api/v1/";
   private String identityManagementCommunicatorEndPoint = "https://auth-test.10npay.com/connect";
@@ -56,16 +56,13 @@ public class AppConfig {
 
   public synchronized static AppConfig getInstance() {
 
-    AppConfig instance = null;
-    try {
-      InitialContext initCtx = new InitialContext();
-      Context envCtx = (Context) initCtx.lookup("java:comp/env");
-      instance = (AppConfig) envCtx.lookup("conf/appConfig");
-
-
-
-    } catch (Exception e) {
-      LogManager.log(AppConfig.class, e);
+    if (instance == null) {
+      try {
+        InitialContext initCtx = new InitialContext();
+        Context envCtx = (Context) initCtx.lookup("java:comp/env");
+        instance = (AppConfig) envCtx.lookup("conf/appConfig");
+      } catch (Exception e) {
+        LogManager.log(AppConfig.class, e);
 
 //      instance = new AppConfig(true,
 //              "DECOUPLED",
@@ -80,9 +77,10 @@ public class AppConfig {
         instance = new AppConfig(true,
                 Implementation.TenN.toString(), true);
 
-    }
+      }
 
-    LogManager.trace(AppConfig.class, "buildInstance()", instance.toString());
+      LogManager.trace(AppConfig.class, "getInstance()", instance.toString());
+    }
 
     return instance;
   }
@@ -119,7 +117,7 @@ public class AppConfig {
     return immediateTransaction;
   }
 
-  public void setIsImmediateTransaction(boolean immediateTransaction) {
+  public void setImmediateTransaction(boolean immediateTransaction) {
     this.immediateTransaction = immediateTransaction;
   }
 
