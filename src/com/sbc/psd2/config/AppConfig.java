@@ -19,7 +19,7 @@ public class AppConfig {
   private boolean testMode;
 
   private static AppConfig instance;
-  private boolean immediateTransaction = false;
+  private boolean immediateTransaction;
   private String coreSystemCommunicatorEndPoint = "https://crm-api-test.10npay.com/api/v1/";
   private String identityManagementCommunicatorEndPoint = "https://auth-test.10npay.com/connect";
 
@@ -32,7 +32,7 @@ public class AppConfig {
 
   }
 
-  public AppConfig(boolean testMode,String implementation,Boolean immediateTransaction) {
+  public AppConfig(boolean testMode,String implementation,boolean immediateTransaction) {
     LogManager.trace(getClass(), "AppConfig()", "" + testMode, implementation.toString());
 
     this.testMode = testMode;
@@ -160,6 +160,5 @@ public class AppConfig {
   public void setScaPassword(String scaPassword) {
     this.scaPassword = scaPassword;
   }
-
 
 }
