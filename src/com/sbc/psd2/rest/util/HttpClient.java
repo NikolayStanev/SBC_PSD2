@@ -64,7 +64,7 @@ public class HttpClient {
     }
 
     public <T>T doPost (Class<T> c) {
-        LogManager.trace(HttpClient.class, "doPost()", url.toString() , requestBody.toString());
+        LogManager.trace(HttpClient.class, "doPost()", url.toString());
 
         HttpURLConnection connection = null;
         ObjectMapper objectMapper = new ObjectMapper();
@@ -75,6 +75,7 @@ public class HttpClient {
                 requestBodyS = (String) requestBody;
             }else {
                 requestBodyS = objectMapper.writeValueAsString(requestBody);
+                LogManager.trace(HttpClient.class, "RequestBody: ", requestBodyS);
             }
 
             connection = prepareRequest(POST);
@@ -89,10 +90,10 @@ public class HttpClient {
 
             String responseS = getResponse(connection);
 
+            LogManager.trace(HttpClient.class, "doPost() returned error - " + responseS);
             if(responseS.contains("errors")) {
 
                 ErrorPojo errorPojo =  objectMapper.readValue(responseS, ErrorPojo.class);
-                LogManager.trace(HttpClient.class, "doPost() returned error - " + errorPojo.getErrors().getErrorsString());
 
                 throw new ApplicationException("Server returned error on post request: " + errorPojo);
             }

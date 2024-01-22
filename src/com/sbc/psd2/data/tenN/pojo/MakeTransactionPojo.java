@@ -78,4 +78,18 @@ public class MakeTransactionPojo {
     public void setSourceCustomerNumber(String sourceCustomerNumber) {
         this.sourceCustomerNumber = sourceCustomerNumber;
     }
+
+    @Override
+    public String toString() {
+        return "MakeTransactionPojo{" +
+                "sourceCustomerAccount='" + sourceCustomerAccount + '\'' +
+                ", beneficiaryCustomerAccount='" + beneficiaryCustomerAccount + '\'' +
+                ", beneficiaryCustomerName='" + beneficiaryCustomerName + '\'' +
+                ", beneficiaryCustomerAddress='" + beneficiaryCustomerAddress + '\'' +
+                ", amount=" + amount +
+                ", notes='" + notes + '\'' +
+                ", productCode='" + productCode + '\'' +
+                ", sourceCustomerNumber='" + sourceCustomerNumber + '\'' +
+                '}';
+    }
 }

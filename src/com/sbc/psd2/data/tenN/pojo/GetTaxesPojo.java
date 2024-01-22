@@ -38,4 +38,13 @@ public class GetTaxesPojo {
     public void setCustomerNumber(String customerNumber) {
         this.customerNumber = customerNumber;
     }
+
+    @Override
+    public String toString() {
+        return "GetTaxesPojo{" +
+                "customerAccount='" + customerAccount + '\'' +
+                ", amount=" + amount +
+                ", customerNumber='" + customerNumber + '\'' +
+                '}';
+    }
 }

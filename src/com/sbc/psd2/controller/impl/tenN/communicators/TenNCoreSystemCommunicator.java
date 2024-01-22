@@ -108,12 +108,10 @@ public class TenNCoreSystemCommunicator implements CoreSystemCommunicator {
             //Make the transaction
             MakeTransactionPojo requestBody = new MakeTransactionPojo();
 
-            //TODO: check if properties match!
             requestBody.setSourceCustomerNumber(tenNCoreAccount.getCustomerNumber());
             requestBody.setSourceCustomerAccount(op.getDebtorAccount().getIban().getIban());
             requestBody.setBeneficiaryCustomerName(op.getCreditorName());
             requestBody.setBeneficiaryCustomerAccount(op.getCreditorAccount().getIban().getIban());
-            requestBody.setBeneficiaryCustomerAddress("PO 88 Sofia");
             requestBody.setAmount(op.getInstructedAmount().getContent());
             requestBody.setProductCode(op.getPaymentType().getServiceLevel());
             requestBody.setNotes(op.getRemittanceInformationUnstructured());
