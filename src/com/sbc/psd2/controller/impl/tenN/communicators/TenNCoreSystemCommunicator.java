@@ -91,7 +91,7 @@ public class TenNCoreSystemCommunicator implements CoreSystemCommunicator {
 
             //Call for taxes
             URL getTaxesURL = new URL(AppConfig.getInstance().getCoreSystemCommunicatorEndPoint() + getTexes.replace("{id}", tenNCoreAccount.getCustomerNumber()));
-            GetTaxesPojo getTaxesPojo = new GetTaxesPojo(tenNCoreAccount.getIbanAccountNumber(),op.getInstructedAmount().getContent(), tenNCoreAccount.getCustomerNumber());
+            GetTaxesPojo getTaxesPojo = new GetTaxesPojo(tenNCoreAccount.getIbanAccountNumber(),op.getInstructedAmount().getAmount(), tenNCoreAccount.getCustomerNumber());
 
             HttpClient http = new HttpClient(getTaxesURL,"application/json", headers);
             http.setRequestBody(getTaxesPojo);
@@ -112,7 +112,7 @@ public class TenNCoreSystemCommunicator implements CoreSystemCommunicator {
             requestBody.setSourceCustomerAccount(op.getDebtorAccount().getIban().getIban());
             requestBody.setBeneficiaryCustomerName(op.getCreditorName());
             requestBody.setBeneficiaryCustomerAccount(op.getCreditorAccount().getIban().getIban());
-            requestBody.setAmount(op.getInstructedAmount().getContent());
+            requestBody.setAmount(op.getInstructedAmount().getAmount());
             requestBody.setProductCode(op.getPaymentType().getServiceLevel());
             requestBody.setNotes(op.getRemittanceInformationUnstructured());
 
