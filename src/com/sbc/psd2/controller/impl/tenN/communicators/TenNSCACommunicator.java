@@ -53,6 +53,8 @@ public class TenNSCACommunicator implements SCACommunicator {
             String description = "Please authorize consent for accounts: " + Util.genTextForSigning(op) + " for " + op.getFrequencyPerDay();
             String requestBody = prepareXML(coreSystemAccountInfo.getPhoneNumber(), description, "Consent", "");
 
+            LogManager.trace(getClass(), "generateOTP for iban: "+ coreSystemAccountInfo.getIban()+ "; phone number: " + coreSystemAccountInfo.getPhoneNumber());
+
             //TODO remove hack
             HostnameVerifier allHostsValid = new HostnameVerifier() {
                 public boolean verify(String hostname, SSLSession session) {
