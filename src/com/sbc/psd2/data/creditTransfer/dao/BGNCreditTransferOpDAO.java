@@ -46,7 +46,7 @@ public class BGNCreditTransferOpDAO {
       ocs.setString(4, op.getCommonData().getPsuIPAddress());
       ocs.setString(5, op.getDebtorAccount().getIban().getIban());
       ocs.setString(6, op.getInstructedAmount().getCurrency());
-      ocs.setBigDecimal(7, op.getInstructedAmount().getContent());
+      ocs.setBigDecimal(7, op.getInstructedAmount().getAmount());
       ocs.setString(8, op.getCreditorAccount().getIban().getIban());
       ocs.setString(9, op.getCreditorName());
       ocs.setString(10, op.getTransactionStatus());

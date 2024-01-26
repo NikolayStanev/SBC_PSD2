@@ -147,7 +147,7 @@ public class TestOTPSS {
     try {
       String fromIBAN = op.getDebtorAccount().getIban().getIban();
       String toIBAN = op.getCreditorAccount().getIban().getIban();
-      String sum = op.getInstructedAmount().getContent().toString();
+      String sum = op.getInstructedAmount().getAmount().toString();
       String currency = op.getInstructedAmount().getCurrency();
       String creditorName = op.getCreditorName();
 
@@ -182,7 +182,7 @@ public class TestOTPSS {
     try {
       String fromIBAN = op.getDebtorAccount().getIban().getIban();
       String toIBAN = op.getCreditorAccount().getIban().getIban();
-      String sum = op.getInstructedAmount().getContent().toString();
+      String sum = op.getInstructedAmount().getAmount().toString();
       String currency = op.getInstructedAmount().getCurrency();
 
       String textForSigning = op.getPaymentId() + DELIMITER + fromIBAN + DELIMITER +

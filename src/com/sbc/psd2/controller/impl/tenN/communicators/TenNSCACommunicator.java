@@ -88,7 +88,7 @@ public class TenNSCACommunicator implements SCACommunicator {
         LogManager.trace(getClass(), "generateOTP()");
 
         try{
-            String description = "Please authorize payment to " + op.getCreditorName() + " for " + op.getInstructedAmount().getContent() + " " + op.getInstructedAmount().getCurrency() + " \n"
+            String description = "Please authorize payment to " + op.getCreditorName() + " for " + op.getInstructedAmount().getAmount() + " " + op.getInstructedAmount().getCurrency() + " \n"
                                 + "Taxes for the payment are: " + op.getTransactionFee() + " " + op.getTransactionFeeCurrency();
             String requestBody = prepareXML(op.getDebtorPhoneNumber(), description, "PAYMENT", op.getExtRefID());
 

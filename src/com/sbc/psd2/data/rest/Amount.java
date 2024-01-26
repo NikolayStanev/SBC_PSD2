@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public class Amount {
 
   private String currency;
-  private BigDecimal content;
+  private BigDecimal amount;
 
   public Amount() {
 
@@ -13,7 +13,7 @@ public class Amount {
 
   public Amount(String currency, BigDecimal content) {
     this.currency = currency;
-    this.content = content;
+    this.amount = content;
   }
 
   public void setCurrency(String currency) {
@@ -25,19 +25,19 @@ public class Amount {
     return currency;
   }
 
-  public BigDecimal getContent() {
-    return content;
+  public BigDecimal getAmount() {
+    return amount;
   }
 
-  public void setContent(BigDecimal content) {
-    this.content = content;
+  public void setAmount(BigDecimal amount) {
+    this.amount = amount;
   }
 
   @Override
   public String toString() {
     return "Amount{" +
             "currency='" + currency + '\'' +
-            ", amount='" + content + '\'' +
+            ", amount='" + amount + '\'' +
             '}';
   }
 }

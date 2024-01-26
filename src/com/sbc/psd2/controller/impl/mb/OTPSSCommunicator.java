@@ -216,7 +216,7 @@ public class OTPSSCommunicator implements SCACommunicator {
       xml = xml.replace(PARAM_CREDIT_IBAN, op.getCreditorAccount().getIban().getIban());
       xml = xml.replace(PARAM_DEBIT_IBAN, op.getDebtorAccount().getIban().getIban());
       xml = xml.replace(PARAM_CURRENCY, op.getInstructedAmount().getCurrency());
-      xml = xml.replace(PARAM_AMOUNT, op.getInstructedAmount().getContent().toString());
+      xml = xml.replace(PARAM_AMOUNT, op.getInstructedAmount().getAmount().toString());
       xml = xml.replace(PARAM_REASON, description);
 
       //System.out.println(xml);

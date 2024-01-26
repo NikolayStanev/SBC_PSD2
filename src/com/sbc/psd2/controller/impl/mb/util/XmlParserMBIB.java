@@ -227,7 +227,7 @@ public class XmlParserMBIB {
                         break;
                     }
                     case "amount": {
-                        amount.setContent(new BigDecimal(value.replace(",", "")));
+                        amount.setAmount(new BigDecimal(value.replace(",", "")));
                         transactionDetails.setTransactionAmount(amount);
                         break;
                     }
@@ -333,7 +333,7 @@ public class XmlParserMBIB {
                             break;
                         }
                         case "amount": {
-                            amount.setContent(new BigDecimal(value.replace(",", "")));
+                            amount.setAmount(new BigDecimal(value.replace(",", "")));
                             transactionDetails.setTransactionAmount(amount);
                             break;
                         }

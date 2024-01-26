@@ -24,7 +24,7 @@ public class FundsConfirmations {
         CoreSystemCommunicator csCommunicator = AbstractCommunicatorFactory.getInstance().getCoreSystemCommunicator();
 
         boolean fundsAvailable = csCommunicator.confirmFunds(fundsConfirmationsRequest.getAccount().getIban(),
-                fundsConfirmationsRequest.getInstructedAmount().getContent(),
+                fundsConfirmationsRequest.getInstructedAmount().getAmount(),
                 fundsConfirmationsRequest.getInstructedAmount().getCurrency());
 
         return fundsAvailable;

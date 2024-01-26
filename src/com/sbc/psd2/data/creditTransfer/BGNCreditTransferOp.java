@@ -273,7 +273,7 @@ public class BGNCreditTransferOp {
     return commonData.getxRequestID() + ", " +
            commonData.getPsuIPAddress() + ", " +
            getDebtorAccount().getIban() + ", " +
-           getInstructedAmount().getContent() + ", " +
+           getInstructedAmount().getAmount() + ", " +
            getInstructedAmount().getCurrency() + ", " +
            getCreditorAccount().getIban() + ", " +
            getCreditorName() + ", " +

@@ -111,7 +111,7 @@ public class PaymentPortalCSCommunicator implements CoreSystemCommunicator {
 
       ocs.setString(2, op.getDebtorAccount().getIban().getIban());
       ocs.setString(3, op.getCreditorAccount().getIban().getIban());
-      ocs.setBigDecimal(4, op.getInstructedAmount().getContent());
+      ocs.setBigDecimal(4, op.getInstructedAmount().getAmount());
       ocs.setString(5, op.getInstructedAmount().getCurrency());
 
       ocs.execute();
