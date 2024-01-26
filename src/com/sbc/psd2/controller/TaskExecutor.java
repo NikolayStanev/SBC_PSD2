@@ -1,6 +1,7 @@
 package com.sbc.psd2.controller;
 
 import com.sbc.common.exception.ApplicationException;
+import com.sbc.common.logging.LogManager;
 import com.sbc.psd2.data.consent.ConsentOp;
 import com.sbc.psd2.data.consent.dao.ConsentOpDAO;
 import com.sbc.psd2.data.creditTransfer.BGNCreditTransferOp;
@@ -29,48 +30,31 @@ public class TaskExecutor {
       String ref = csCommunicator.makeTransaction(op);
       op.setExtRefID(ref);
     } catch (ApplicationException e) {
-      // todo handle it, maybe this is the right impl??!
+      LogManager.trace(TaskExecutor.class, e);
       psd2Status = TransactionStatuses.REJECTED;
-    } catch (Exception e) {
-      // todo handle it, maybe this is the right impl??!
-      psd2Status = TransactionStatuses.REJECTED;
-    }
-
-    try {
+    }finally {
       op.setTransactionStatus(psd2Status);
 
       BGNCreditTransferOpDAO.update(op);
-    } catch (Exception ex) {
-      // todo: what will happen in this case??!
     }
-
     return psd2Status;
 
   }
 
   public void consentAuth (ConsentOp op) {
     String consentStatus = ConsentStatuses.VALID;
-
     try {
-
       SCACommunicator scaCommunicator = AbstractCommunicatorFactory.getInstance().getScaCommunicator();
 
       scaCommunicator.generateOTP(op);
 
     } catch (ApplicationException e) {
-      // todo handle it, maybe this is the right impl??!
+      LogManager.trace(TaskExecutor.class, e);
       consentStatus = ConsentStatuses.REJECTED;
-    } catch (Exception e) {
-      // todo handle it, maybe this is the right impl??!
-      consentStatus = ConsentStatuses.REJECTED;
-    }
-
-    try {
+    } finally {
       op.setConsentStatus(consentStatus);
 
       ConsentOpDAO.updateConsentStatus(op.getDbId(), consentStatus);
-    } catch (Exception ex) {
-      // todo: what will happen in this case??!
     }
   }
 

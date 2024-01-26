@@ -129,9 +129,9 @@ public class TenNCoreSystemCommunicator implements CoreSystemCommunicator {
             BGNCreditTransferOpDAO.update(op);
 
             return transactionRef;
-        }catch (Exception e) {
-            LogManager.log(getClass(), e);
-
+        }catch (ApplicationException e) {
+            throw e;
+        } catch (Exception e) {
             throw new ApplicationException(ApplicationException.INTERNAL_ERROR, "Internal error!");
         }
 
