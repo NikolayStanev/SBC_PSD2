@@ -50,8 +50,9 @@ public class TenNSCACommunicator implements SCACommunicator {
 
             CoreSystemAccountInfo coreSystemAccountInfo = communicator.getAccountDetails(iban);
 
-            String description = "Please authorize consent for accounts: " + Util.genTextForSigning(op) + " for " + op.getFrequencyPerDay();
-            String requestBody = prepareXML(coreSystemAccountInfo.getPhoneNumber(), description, "Consent", "");
+            String description = "Please authorize consent for accounts: " + Util.genTextForSigning10n(op) + " for " + op.getFrequencyPerDay() + "times a day \n"
+                    + "Valid until: " + op.getValidUntil();
+            String requestBody = prepareXML(coreSystemAccountInfo.getPhoneNumber(), op.getConsentId(), description, op.getConsentId());
 
             LogManager.trace(getClass(), "generateOTP for iban: "+ coreSystemAccountInfo.getIban()+ "; phone number: " + coreSystemAccountInfo.getPhoneNumber());
 
@@ -92,7 +93,7 @@ public class TenNSCACommunicator implements SCACommunicator {
         try{
             String description = "Please authorize payment to " + op.getCreditorName() + " for " + op.getInstructedAmount().getAmount() + " " + op.getInstructedAmount().getCurrency() + " \n"
                                 + "Taxes for the payment are: " + op.getTransactionFee() + " " + op.getTransactionFeeCurrency();
-            String requestBody = prepareXML(op.getDebtorPhoneNumber(), description, "PAYMENT", op.getExtRefID());
+            String requestBody = prepareXML(op.getDebtorPhoneNumber(), op.getPaymentId(), description, op.getExtRefID());
 
             HostnameVerifier allHostsValid = new HostnameVerifier() {
                 public boolean verify(String hostname, SSLSession session) {
