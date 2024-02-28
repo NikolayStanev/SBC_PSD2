@@ -119,5 +119,21 @@ public class Util {
 
     return textForSigning;
   }
+  public static String genTextForSigning10n(ConsentOp op) {
+    StringBuilder sb = new StringBuilder();
+    for (String iban : op.getAccountMap().keySet()) {
+      sb.append(iban);
+      sb.append(',');
+    }
+
+    String accounts = sb.toString();
+    if (accounts.length() > 0) {
+      accounts = accounts.substring(0, accounts.length() - 1);
+    }
+
+    String textForSigning =  accounts;
+
+    return textForSigning;
+  }
 
 }
