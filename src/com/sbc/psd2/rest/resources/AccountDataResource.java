@@ -60,7 +60,7 @@ public class AccountDataResource {
           AccountDetails info = new AccountDetails();
 
           info.setResourceId(account.getAccountId());
-          info.setIban(new IBAN(csInfo.getIban()));
+          info.setIban(csInfo.getIban());
           info.setCurrency(csInfo.getCurrency());
           info.setProduct(csInfo.getProduct());
           info.setCashAccountType(csInfo.getCashAccountType());
@@ -118,7 +118,7 @@ public class AccountDataResource {
         AccountDetails info = new AccountDetails();
 
         info.setResourceId(account.getAccountId());
-        info.setIban(new IBAN(csInfo.getIban()));
+        info.setIban(csInfo.getIban());
         info.setCurrency(csInfo.getCurrency());
         info.setProduct(csInfo.getProduct());
         info.setCashAccountType(csInfo.getCashAccountType());

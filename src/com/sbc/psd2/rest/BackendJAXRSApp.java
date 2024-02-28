@@ -70,7 +70,7 @@ public class BackendJAXRSApp extends JaxRsApplication {
       testMode = AppConfig.getInstance().isTestMode();
     }
 
-  public boolean isTestMode() {
+    public boolean isTestMode() {
     return testMode;
   }
 }

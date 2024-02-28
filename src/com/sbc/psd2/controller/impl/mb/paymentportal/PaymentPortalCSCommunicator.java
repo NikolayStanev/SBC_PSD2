@@ -109,8 +109,8 @@ public class PaymentPortalCSCommunicator implements CoreSystemCommunicator {
       ocs.registerOutParameter(1, OracleTypes.NUMBER);
       ocs.registerOutParameter(6, OracleTypes.VARCHAR);
 
-      ocs.setString(2, op.getDebtorAccount().getIban().getIban());
-      ocs.setString(3, op.getCreditorAccount().getIban().getIban());
+      ocs.setString(2, op.getDebtorAccount().getIban());
+      ocs.setString(3, op.getCreditorAccount().getIban());
       ocs.setBigDecimal(4, op.getInstructedAmount().getAmount());
       ocs.setString(5, op.getInstructedAmount().getCurrency());
 

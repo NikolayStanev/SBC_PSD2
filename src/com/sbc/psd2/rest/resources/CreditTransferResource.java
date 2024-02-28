@@ -83,7 +83,7 @@ public class CreditTransferResource {
 
     CoreSystemCommunicator csCommunicator = AbstractCommunicatorFactory.getInstance().getCoreSystemCommunicator();
 
-    csCommunicator.validateIBANs(op.getDebtorAccount().getIban().getIban(), userInfo);
+    csCommunicator.validateIBANs(op.getDebtorAccount().getIban(), userInfo);
 
     // save into db info about request and response
     BGNCreditTransferOpDAO.createTransferOp(op);

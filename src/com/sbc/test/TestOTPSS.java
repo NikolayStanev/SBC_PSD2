@@ -145,8 +145,8 @@ public class TestOTPSS {
 
   public static void pushOTP(BGNCreditTransferOp op, String token) throws ApplicationException {
     try {
-      String fromIBAN = op.getDebtorAccount().getIban().getIban();
-      String toIBAN = op.getCreditorAccount().getIban().getIban();
+      String fromIBAN = op.getDebtorAccount().getIban();
+      String toIBAN = op.getCreditorAccount().getIban();
       String sum = op.getInstructedAmount().getAmount().toString();
       String currency = op.getInstructedAmount().getCurrency();
       String creditorName = op.getCreditorName();
@@ -180,8 +180,8 @@ public class TestOTPSS {
 
   public static void checkOTP(BGNCreditTransferOp op, String token, String otp) throws ApplicationException {
     try {
-      String fromIBAN = op.getDebtorAccount().getIban().getIban();
-      String toIBAN = op.getCreditorAccount().getIban().getIban();
+      String fromIBAN = op.getDebtorAccount().getIban();
+      String toIBAN = op.getCreditorAccount().getIban();
       String sum = op.getInstructedAmount().getAmount().toString();
       String currency = op.getInstructedAmount().getCurrency();
 

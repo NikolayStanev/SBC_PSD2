@@ -44,10 +44,10 @@ public class BGNCreditTransferOpDAO {
       ocs.setString(2, op.getCommonData().getxRequestID());
       ocs.setString(3, op.getCommonData().getIp());
       ocs.setString(4, op.getCommonData().getPsuIPAddress());
-      ocs.setString(5, op.getDebtorAccount().getIban().getIban());
+      ocs.setString(5, op.getDebtorAccount().getIban());
       ocs.setString(6, op.getInstructedAmount().getCurrency());
       ocs.setBigDecimal(7, op.getInstructedAmount().getAmount());
-      ocs.setString(8, op.getCreditorAccount().getIban().getIban());
+      ocs.setString(8, op.getCreditorAccount().getIban());
       ocs.setString(9, op.getCreditorName());
       ocs.setString(10, op.getTransactionStatus());
       ocs.setString(11, op.getPaymentId());
@@ -203,12 +203,9 @@ public class BGNCreditTransferOpDAO {
         String transactionFee = rs.getString(19);
         String transactionFeeCurrency = rs.getString(20);
 
-        IBAN debitIBAN = new IBAN(debitIBANString);
-        IBAN creditIBAN = new IBAN(creditIBANString);
-
         Amount instructedAmount = new Amount(currency, amount);
-        AccountDetails debtorAccountDetails = new AccountDetails(debitIBAN);
-        AccountDetails creditorAccountDetails = new AccountDetails(creditIBAN);
+        AccountDetails debtorAccountDetails = new AccountDetails(debitIBANString);
+        AccountDetails creditorAccountDetails = new AccountDetails(creditIBANString);
         PaymentType paymentType = new PaymentType(serviceLevel);
 
         PSD2RequestCommonData commonData = new PSD2RequestCommonData(xRequestID, psuID, psuIPAddress, ip, consentID, tppID);

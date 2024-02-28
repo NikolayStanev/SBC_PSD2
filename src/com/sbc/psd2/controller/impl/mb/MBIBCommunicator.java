@@ -421,8 +421,8 @@ public class MBIBCommunicator implements CoreSystemCommunicator {
 
       xml = xml.replace(PARAM_DOC_ID, op.getExtRefID());
       xml = xml.replace(PARAM_PAYEE_NAME, op.getCreditorName());
-      xml = xml.replace(PARAM_CREDIT_IBAN, op.getCreditorAccount().getIban().getIban());
-      xml = xml.replace(PARAM_DEBIT_IBAN, op.getDebtorAccount().getIban().getIban());
+      xml = xml.replace(PARAM_CREDIT_IBAN, op.getCreditorAccount().getIban());
+      xml = xml.replace(PARAM_DEBIT_IBAN, op.getDebtorAccount().getIban());
       xml = xml.replace(PARAM_CURRENCY, op.getInstructedAmount().getCurrency());
       xml = xml.replace(PARAM_AMOUNT, op.getInstructedAmount().getAmount().toString());
       xml = xml.replace(PARAM_REASON, description);

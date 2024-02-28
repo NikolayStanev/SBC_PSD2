@@ -130,9 +130,9 @@ public class TestFullCircle {
     Amount amount = new Amount(currency, amountDec);
 
     AccountDetails creditorAccount = new AccountDetails();
-    creditorAccount.setIban(new IBAN(creditIBAN));
+    creditorAccount.setIban(creditIBAN);
     AccountDetails debtorAccount = new AccountDetails();
-    debtorAccount.setIban(new IBAN(debitIBAN));
+    debtorAccount.setIban(debitIBAN);
 
     PSD2RequestCommonData commonData = new PSD2RequestCommonData("abc1234567", "pib", null, null, "12234234", EIDAS_TPP_ID);
 

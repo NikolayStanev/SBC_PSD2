@@ -213,8 +213,8 @@ public class OTPSSCommunicator implements SCACommunicator {
       xml = xml.replace(PARAM_THUMBPRINT, thumbprint);
 
       xml = xml.replace(PARAM_PAYEE_NAME, op.getCreditorName());
-      xml = xml.replace(PARAM_CREDIT_IBAN, op.getCreditorAccount().getIban().getIban());
-      xml = xml.replace(PARAM_DEBIT_IBAN, op.getDebtorAccount().getIban().getIban());
+      xml = xml.replace(PARAM_CREDIT_IBAN, op.getCreditorAccount().getIban());
+      xml = xml.replace(PARAM_DEBIT_IBAN, op.getDebtorAccount().getIban());
       xml = xml.replace(PARAM_CURRENCY, op.getInstructedAmount().getCurrency());
       xml = xml.replace(PARAM_AMOUNT, op.getInstructedAmount().getAmount().toString());
       xml = xml.replace(PARAM_REASON, description);
@@ -282,9 +282,9 @@ public class OTPSSCommunicator implements SCACommunicator {
     String creditorName = "Joro Buhalkata";
 
     AccountDetails creditorAccount = new AccountDetails();
-    creditorAccount.setIban(new IBAN("BG20UBBS88881000597232"));
+    creditorAccount.setIban("BG20UBBS88881000597232");
     AccountDetails debtorAccount = new AccountDetails();
-    debtorAccount.setIban(new IBAN("BG58SOMB91301000000637"));
+    debtorAccount.setIban("BG58SOMB91301000000637");
 
     PSD2RequestCommonData commonData = new PSD2RequestCommonData("abc1234567", "pib", null, null, "12234234", "PSDBG-BNB-121086224");
 

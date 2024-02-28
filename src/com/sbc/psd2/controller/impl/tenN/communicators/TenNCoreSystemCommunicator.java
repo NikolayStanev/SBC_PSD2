@@ -84,7 +84,7 @@ public class TenNCoreSystemCommunicator implements CoreSystemCommunicator {
             HashMap<String, String> headers = new HashMap<>();
             headers.put("Authorization", TenNIdentityManagementCommunicator.tokenType + " " + TenNIdentityManagementCommunicator.apiToken);
             //Get accDetails to obtain customer ref.
-            TenNCoreAccount tenNCoreAccount = getAccountDetails(op.getDebtorAccount().getIban().getIban());
+            TenNCoreAccount tenNCoreAccount = getAccountDetails(op.getDebtorAccount().getIban());
 
             op.setDebtorPhoneNumber(tenNCoreAccount.getPhoneNumber());
             op.setCustomerNumber(tenNCoreAccount.getCustomerNumber());
@@ -109,9 +109,9 @@ public class TenNCoreSystemCommunicator implements CoreSystemCommunicator {
             MakeTransactionPojo requestBody = new MakeTransactionPojo();
 
             requestBody.setSourceCustomerNumber(tenNCoreAccount.getCustomerNumber());
-            requestBody.setSourceCustomerAccount(op.getDebtorAccount().getIban().getIban());
+            requestBody.setSourceCustomerAccount(op.getDebtorAccount().getIban());
             requestBody.setBeneficiaryCustomerName(op.getCreditorName());
-            requestBody.setBeneficiaryCustomerAccount(op.getCreditorAccount().getIban().getIban());
+            requestBody.setBeneficiaryCustomerAccount(op.getCreditorAccount().getIban());
             requestBody.setAmount(op.getInstructedAmount().getAmount());
             requestBody.setProductCode(op.getPaymentType().getServiceLevel());
             requestBody.setNotes(op.getRemittanceInformationUnstructured());

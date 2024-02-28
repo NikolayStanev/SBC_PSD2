@@ -4,7 +4,7 @@ import com.sbc.psd2.data.account.AccountLinks;
 
 public class AccountDetails {
 
-  private IBAN iban;
+  private String iban;
   private String bban;
   private String pan;
   private String maskedPan;
@@ -20,15 +20,15 @@ public class AccountDetails {
   public AccountDetails() {
   }
 
-  public AccountDetails(IBAN iban) {
+  public AccountDetails(String iban) {
     this.iban = iban;
   }
 
-  public IBAN getIban() {
+  public String getIban() {
     return iban;
   }
 
-  public void setIban(IBAN iban) {
+  public void setIban(String iban) {
     this.iban = iban;
   }
 
