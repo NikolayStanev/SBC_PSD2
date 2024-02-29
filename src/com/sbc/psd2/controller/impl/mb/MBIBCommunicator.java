@@ -502,7 +502,7 @@ public class MBIBCommunicator implements CoreSystemCommunicator {
       String xmlResult = ocs.getString(2);
 
       if (xmlResult.contains("<ERRORS>")) {
-        throw new ApplicationException(ApplicationException.TOKEN_INVALID, "Not valid iban!");
+        throw new ApplicationException(ApplicationException.FORMAT_ERROR, "Not valid iban!");
       } else {
         accountInfo = XmlParserMBIB.parseAccount(xmlResult);
       }

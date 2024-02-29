@@ -4,6 +4,7 @@ package com.sbc.psd2.controller;
 import com.sbc.common.exception.ApplicationException;
 import com.sbc.common.logging.LogManager;
 
+import com.sbc.psd2.config.AppConfig;
 import com.sbc.psd2.data.UserInfo;
 import com.sbc.psd2.rest.BackendJAXRSApp;
 import com.sbc.psd2.rest.ErrorInfo;
@@ -57,7 +58,6 @@ public class UserFilter extends Filter {
 
       threadLocalHeaders.set(headers);
 
-
       String ip = getIP(request);
       checkIP(ip);
 
@@ -74,7 +74,7 @@ public class UserFilter extends Filter {
       Reference reference = request.getOriginalRef();
       String path = reference.getPath();
 
-      if (path.contains("payments") || path.contains("consents")) {
+      if (!AppConfig.getInstance().isTestMode() && (path.contains("payments") || path.contains("consents"))) {
         checkUserIDToken();
       }
 
