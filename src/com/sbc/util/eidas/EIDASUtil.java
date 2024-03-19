@@ -11,6 +11,8 @@ import org.bouncycastle.openssl.jcajce.JcaPEMWriter;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.*;
@@ -31,9 +33,17 @@ public class EIDASUtil {
     caFingerprints = new Properties();
 
     try {
-      InputStream input = new FileInputStream("ca2.txt");
+      BufferedReader reader = new BufferedReader(new FileReader("./ca.txt"));
+      String line = reader.readLine();
+      while (line != null) {
+        String[] split = line.split(":");
 
-      caFingerprints.load(input);
+        caFingerprints.put(split[0], split[1]);
+        line = reader.readLine();
+      }
+      reader.close();
+
+      System.out.println("Cert fingerprints loaded!");
     } catch (Exception e) {
 
       caFingerprints.put("CN=B-Trust Root Advanced CA, OU=B-Trust, O=BORICA AD, OID.2.5.4.97=NTRBG-201230426, C=BG", "ba11d6ad94b24fc916113af682cd762ab3bfd775");
