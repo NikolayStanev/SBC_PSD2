@@ -90,7 +90,9 @@ public class HttpClient {
 
             String responseS = getResponse(connection);
 
-            LogManager.trace(HttpClient.class, "doPost() returned error - " + responseS);
+
+
+            LogManager.trace(HttpClient.class, "doPost() returned:  \n" + responseS);
             if(responseS.contains("errors")) {
 
                 ErrorPojo errorPojo =  objectMapper.readValue(responseS, ErrorPojo.class);

@@ -54,8 +54,6 @@ public class TenNSCACommunicator implements SCACommunicator {
                     + "Valid until: " + op.getValidUntil();
             String requestBody = prepareXML(coreSystemAccountInfo.getPhoneNumber(), op.getConsentId(), description, op.getConsentId());
 
-            LogManager.trace(getClass(), "generateOTP for iban: "+ coreSystemAccountInfo.getIban()+ "; phone number: " + coreSystemAccountInfo.getPhoneNumber());
-
             //TODO remove hack
             HostnameVerifier allHostsValid = new HostnameVerifier() {
                 public boolean verify(String hostname, SSLSession session) {
@@ -93,7 +91,7 @@ public class TenNSCACommunicator implements SCACommunicator {
         try{
             String description = "Please authorize payment to " + op.getCreditorName() + " for " + op.getInstructedAmount().getAmount() + " " + op.getInstructedAmount().getCurrency() + " \n"
                                 + "Taxes for the payment are: " + op.getTransactionFee() + " " + op.getTransactionFeeCurrency();
-            String requestBody = prepareXML(op.getDebtorPhoneNumber(), op.getPaymentId(), description, op.getExtRefID());
+            String requestBody = prepareXML(op.getDebtorPhoneNumber(), op.getPaymentId(), description, op.getPaymentId());
 
             HostnameVerifier allHostsValid = new HostnameVerifier() {
                 public boolean verify(String hostname, SSLSession session) {
@@ -156,6 +154,8 @@ public class TenNSCACommunicator implements SCACommunicator {
         transformer.transform(new DOMSource(doc), new StreamResult(writer));
         //String output = writer.getBuffer().toString().replaceAll("\n|\r", "");
         requestBody = writer.getBuffer().toString();
+
+        LogManager.trace(getClass(),"OTP Request: \n" + requestBody);
 
         return requestBody;
     }
