@@ -45,7 +45,7 @@ public class Headers {
   }
 
   public static String getHeaderValue(Series<Header> headers, String headerName) {
-    Header header = headers.getFirst(headerName);
+    Header header = headers.getFirst(headerName,true);
     if (header == null) {
       header = headers.getFirst(headerName.toLowerCase());
     }
